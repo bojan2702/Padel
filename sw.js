@@ -1,4 +1,4 @@
-const CACHE = 'padel-v3';
+const CACHE = 'padel-v4';
 const BASE = '/Padel';
 const ASSETS = [
   BASE + '/',
