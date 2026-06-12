@@ -208,6 +208,27 @@ html,body{height:100%;background:var(--bg3);font-family:-apple-system,BlinkMacSy
 
 .toast{position:fixed;bottom:max(20px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(80px);background:var(--text);color:var(--bg);font-size:14px;padding:10px 20px;border-radius:99px;z-index:300;transition:transform .3s;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
+
+.user-row{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.user-row-av{width:38px;height:38px;border-radius:50%;background:var(--green-mid);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--green-text);flex-shrink:0}
+.user-row-av.admin-av{background:var(--amber-light);color:var(--amber-text)}
+.user-row-info{flex:1;min-width:0}
+.user-row-name{font-size:14px;font-weight:500;color:var(--text)}
+.user-row-email{font-size:12px;color:var(--text2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.role-pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;border:0.5px solid}
+.role-pill.admin{background:var(--amber-light);color:var(--amber-text);border-color:rgba(186,117,23,.3)}
+.role-pill.user{background:var(--blue-light);color:var(--blue-text);border-color:rgba(55,138,221,.2)}
+.user-row-actions{display:flex;gap:6px}
+.btn-xs{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:5px 10px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text2);white-space:nowrap}
+.btn-xs:active{background:var(--bg3)}
+.btn-xs.danger{color:var(--red)}
+.btn-xs.danger:active{background:var(--red-bg)}
+.add-user-box{background:var(--bg2);border-radius:var(--radius);padding:14px;margin-bottom:14px}
+.add-user-box h4{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.role-toggle{display:flex;gap:6px;margin-bottom:12px}
+.role-toggle-btn{flex:1;padding:8px;border-radius:var(--radius-sm);border:0.5px solid var(--border);background:transparent;font-size:13px;font-weight:500;cursor:pointer;color:var(--text2);text-align:center;transition:all .1s}
+.role-toggle-btn.active{background:var(--green);color:#E1F5EE;border-color:var(--green)}
+.users-section-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -254,6 +275,9 @@ html,body{height:100%;background:var(--bg3);font-family:-apple-system,BlinkMacSy
         <div class="menu-header">
           <div style="font-size:14px;font-weight:500" id="menu-ime">—</div>
           <div class="menu-email" id="menu-email">—</div>
+        </div>
+        <div class="menu-item" id="menu-igraci" style="display:none" onclick="openIgraci()">
+          <i class="ti ti-users"></i>Upravljanje igračima
         </div>
         <div class="menu-item" onclick="openChangePw()">
           <i class="ti ti-lock"></i>Promjena lozinke
@@ -375,13 +399,42 @@ html,body{height:100%;background:var(--bg3);font-family:-apple-system,BlinkMacSy
   </div>
 </div>
 
+<!-- USERS MANAGEMENT SHEET (admin only) -->
+<div class="sheet-bg" id="igraci-sheet">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>Upravljanje igračima</h3>
+
+    <div class="add-user-box">
+      <h4>Dodaj novog igrača</h4>
+      <div class="fg" style="margin-bottom:8px"><label>Ime i prezime</label><input type="text" id="nu-ime" placeholder="npr. Marko Kovač"></div>
+      <div class="fg" style="margin-bottom:8px"><label>Email</label><input type="email" id="nu-email" placeholder="email@domena.com" inputmode="email" autocapitalize="off"></div>
+      <div class="fg" style="margin-bottom:10px"><label>Lozinka</label><input type="password" id="nu-pass" placeholder="Min. 6 znakova" autocomplete="new-password"></div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Rola:</div>
+      <div class="role-toggle">
+        <div class="role-toggle-btn active" id="rt-user" onclick="setRoleToggle('user')">Igrač</div>
+        <div class="role-toggle-btn" id="rt-admin" onclick="setRoleToggle('admin')">Admin</div>
+      </div>
+      <div class="err-msg" id="nu-err"></div>
+      <button class="btn-primary" id="btn-nu" onclick="dodajIgraca()" style="margin-top:4px"><i class="ti ti-user-plus"></i>Dodaj igrača</button>
+    </div>
+
+    <div class="users-section-label">Registrirani igrači</div>
+    <div id="igraci-lista"><div class="loading-inner"><div class="spinner" style="width:24px;height:24px;border-width:2px;margin:0 auto 8px"></div><p style="font-size:13px">Učitavanje...</p></div></div>
+
+    <div style="margin-top:14px">
+      <button class="btn-cancel" style="width:100%" onclick="closeSheets()">Zatvori</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword }
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, createUserWithEmailAndPassword }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, collection, doc, getDoc, onSnapshot, addDoc, updateDoc,
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, onSnapshot, addDoc, updateDoc,
          deleteDoc, query, orderBy, serverTimestamp }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
@@ -397,6 +450,11 @@ const firebaseConfig = {
 const fbApp = initializeApp(firebaseConfig);
 const auth  = getAuth(fbApp);
 const db    = getFirestore(fbApp);
+
+// Sekundarna app — za kreiranje novih korisnika bez odjave admina
+const fbApp2 = initializeApp(firebaseConfig, 'secondary');
+const auth2  = getAuth(fbApp2);
+
 const sessionsCol = collection(db, 'sessions');
 
 let currentUser  = null;
@@ -408,6 +466,7 @@ let scoringId    = null;
 let numSets      = 2;
 let deferredInstall = null;
 let unsubSessions = null;
+let newRole = 'user';
 
 function ini(n) { return n.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
 function fmtDt(s) {
@@ -448,6 +507,8 @@ function showApp(){
   document.getElementById('user-chip-name').textContent=ime.split(' ')[0];
   document.getElementById('menu-ime').textContent=ime;
   document.getElementById('menu-email').textContent=currentUser.email;
+  const isAdmin = currentUser.role === 'admin';
+  document.getElementById('menu-igraci').style.display = isAdmin ? '' : 'none';
   startListener();
 }
 
@@ -584,10 +645,10 @@ window.addSession=async()=>{
   setBtn('btn-add',true);
   try {
     await addDoc(sessionsCol,{
-      organizer:ime,organizerUid:currentUser.uid,
-      location:loc,datetime:dt,
-      players:[ime],playerUids:[currentUser.uid],
-      teams:null,result:null,createdAt:serverTimestamp()
+      organizer:ime, organizerUid:currentUser.uid,
+      location:loc, datetime:dt,
+      players:[ime], playerUids:[currentUser.uid],
+      teams:null, result:null, createdAt:serverTimestamp()
     });
     document.getElementById('f-loc').value='';
     document.getElementById('f-dt').value='';
@@ -703,6 +764,115 @@ window.deleteSession=async(fid)=>{
   if(!confirm('Obrisati ovaj termin?')) return;
   try{await deleteDoc(doc(db,'sessions',fid));toast('Termin obrisan.');}
   catch(e){toast('Greška: '+e.message);}
+};
+
+// ── User management (admin) ───────────────────────────────────────────────
+window.openIgraci = async function(){
+  zatvoriMenu();
+  document.getElementById('nu-ime').value='';
+  document.getElementById('nu-email').value='';
+  document.getElementById('nu-pass').value='';
+  document.getElementById('nu-err').style.display='none';
+  newRole='user';
+  setRoleToggle('user');
+  document.getElementById('igraci-sheet').classList.add('open');
+  await ucitajIgrace();
+};
+
+window.setRoleToggle = function(role){
+  newRole=role;
+  document.getElementById('rt-user').classList.toggle('active', role==='user');
+  document.getElementById('rt-admin').classList.toggle('active', role==='admin');
+};
+
+async function ucitajIgrace(){
+  const lista = document.getElementById('igraci-lista');
+  try {
+    const snap = await getDocs(collection(db,'korisnici'));
+    const korisnici = snap.docs.map(d=>({uid:d.id,...d.data()}));
+    if(!korisnici.length){
+      lista.innerHTML=`<div style="font-size:13px;color:var(--text2);text-align:center;padding:16px">Nema registriranih igrača.</div>`;
+      return;
+    }
+    korisnici.sort((a,b)=>(a.ime||'').localeCompare(b.ime||''));
+    lista.innerHTML=korisnici.map(k=>{
+      const ime=k.ime||k.email||'—';
+      const ini2=ime.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      const isAdmin=k.role==='admin';
+      const isSelf=k.uid===currentUser.uid;
+      return `<div class="user-row">
+        <div class="user-row-av ${isAdmin?'admin-av':''}">${ini2}</div>
+        <div class="user-row-info">
+          <div class="user-row-name">${ime}${isSelf?' <span style="font-size:10px;color:var(--text3)">(ti)</span>':''}</div>
+          <div class="user-row-email">${k.email||'—'}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="role-pill ${isAdmin?'admin':'user'}">${isAdmin?'admin':'igrač'}</span>
+          ${!isSelf?`<div class="user-row-actions">
+            <button class="btn-xs" onclick="toggleAdminRole('${k.uid}','${k.role||'user'}')">${isAdmin?'Skini admina':'Daj admina'}</button>
+            <button class="btn-xs danger" onclick="obrisiIgraca('${k.uid}','${ime}')">Obriši</button>
+          </div>`:''}
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e){
+    lista.innerHTML=`<div style="font-size:13px;color:var(--red);padding:12px">Greška učitavanja: ${e.message}</div>`;
+  }
+}
+
+window.dodajIgraca = async function(){
+  const ime  = document.getElementById('nu-ime').value.trim();
+  const email= document.getElementById('nu-email').value.trim();
+  const pass = document.getElementById('nu-pass').value;
+  const err  = document.getElementById('nu-err');
+  err.style.display='none';
+  if(!ime)  {err.textContent='Unesi ime i prezime.';err.style.display='block';return;}
+  if(!email){err.textContent='Unesi email.';err.style.display='block';return;}
+  if(pass.length<6){err.textContent='Lozinka mora imati min. 6 znakova.';err.style.display='block';return;}
+  setBtn('btn-nu',true);
+  try {
+    // Kreiraj korisnika kroz sekundarnu app — ne odjavljuje admina
+    const cred = await createUserWithEmailAndPassword(auth2, email, pass);
+    const uid  = cred.user.uid;
+    // Odmah se odjavi iz sekundarne app
+    await signOut(auth2);
+    // Spremi profil u Firestore
+    await setDoc(doc(db,'korisnici',uid),{
+      ime, email, role: newRole, disabled: false, createdAt: serverTimestamp()
+    });
+    document.getElementById('nu-ime').value='';
+    document.getElementById('nu-email').value='';
+    document.getElementById('nu-pass').value='';
+    toast(`${ime} dodan/a!`);
+    await ucitajIgrace();
+  } catch(e){
+    const msgs={
+      'auth/email-already-in-use':'Taj email već postoji.',
+      'auth/invalid-email':'Neispravan format emaila.',
+      'auth/weak-password':'Lozinka je preslaba.'
+    };
+    err.textContent=msgs[e.code]||'Greška: '+e.message;
+    err.style.display='block';
+  }
+  setBtn('btn-nu',false);
+};
+
+window.toggleAdminRole = async function(uid, currentRole){
+  const novaRola = currentRole==='admin'?'user':'admin';
+  try {
+    await updateDoc(doc(db,'korisnici',uid),{role:novaRola});
+    toast(novaRola==='admin'?'Admin dodijeljen.':'Admin uklonjen.');
+    await ucitajIgrace();
+  } catch(e){toast('Greška: '+e.message);}
+};
+
+window.obrisiIgraca = async function(uid, ime){
+  if(!confirm(`Obrisati korisnika "${ime}"?\n\nOvo briše profil iz baze, ali ne i Firebase Auth račun.`)) return;
+  try {
+    await deleteDoc(doc(db,'korisnici',uid));
+    toast(`${ime} obrisan/a.`);
+    await ucitajIgrace();
+  } catch(e){toast('Greška: '+e.message);}
 };
 
 // ── Close sheets ──────────────────────────────────────────────────────────
