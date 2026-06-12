@@ -12,157 +12,258 @@
 <link rel="apple-touch-icon" href="/Padel/icons/icon-192.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-  :root {
-    --green: #1D9E75; --green-dark: #0F6E56; --green-light: #E1F5EE;
-    --green-mid: #9FE1CB; --green-text: #085041;
-    --coral: #F5C4B3; --coral-text: #712B13; --coral-dark: #D85A30;
-    --blue-light: #E6F1FB; --blue-text: #0C447C;
-    --amber-light: #FAEEDA; --amber-text: #633806;
-    --bg: #ffffff; --bg2: #f5f5f3; --bg3: #efefed;
-    --text: #1a1a18; --text2: #6b6b67; --text3: #a0a09c;
-    --border: rgba(0,0,0,0.12); --border2: rgba(0,0,0,0.22);
-    --radius: 12px; --radius-sm: 8px;
+:root {
+  --green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;
+  --green-mid:#9FE1CB;--green-text:#085041;
+  --coral:#F5C4B3;--coral-text:#712B13;--coral-dark:#D85A30;
+  --blue-light:#E6F1FB;--blue-text:#0C447C;
+  --amber-light:#FAEEDA;--amber-text:#633806;
+  --red:#b83232;--red-bg:#fdf0f0;
+  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#efefed;
+  --text:#1a1a18;--text2:#6b6b67;--text3:#a0a09c;
+  --border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.22);
+  --radius:12px;--radius-sm:8px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1a1a18;--bg2:#252523;--bg3:#2e2e2b;
+    --text:#f0efe8;--text2:#a0a09c;--text3:#6b6b67;
+    --border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.2);
+    --green-light:#04342C;--green-text:#9FE1CB;
+    --coral:#4A1B0C;--coral-text:#F0997B;
+    --blue-light:#042C53;--blue-text:#85B7EB;
+    --amber-light:#412402;--amber-text:#FAC775;
+    --red-bg:#2a0f0f;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1a1a18; --bg2: #252523; --bg3: #2e2e2b;
-      --text: #f0efe8; --text2: #a0a09c; --text3: #6b6b67;
-      --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
-      --green-light: #04342C; --green-text: #9FE1CB;
-      --coral: #4A1B0C; --coral-text: #F0997B;
-      --blue-light: #042C53; --blue-text: #85B7EB;
-      --amber-light: #412402; --amber-text: #FAC775;
-    }
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; background: var(--bg3); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); }
-  .app { max-width: 480px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; background: var(--bg); }
-  .topbar { background: var(--bg); border-bottom: 0.5px solid var(--border); padding: 14px 16px 12px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 10; }
-  .topbar-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--green); display: flex; align-items: center; justify-content: center; }
-  .topbar-icon i { font-size: 18px; color: #E1F5EE; }
-  .topbar h1 { font-size: 17px; font-weight: 600; }
-  .topbar p { font-size: 12px; color: var(--text2); }
-  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; margin-left: auto; flex-shrink: 0; transition: background .3s; }
-  .sync-dot.live { background: var(--green); }
-  .sync-dot.err { background: var(--coral-dark); }
-  .install-banner { background: var(--green-light); color: var(--green-text); font-size: 13px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; border-bottom: 0.5px solid var(--border); }
-  .install-banner i { font-size: 18px; flex-shrink: 0; }
-  .install-banner span { flex: 1; }
-  .install-banner button { background: var(--green); color: #E1F5EE; border: none; border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; }
-  .tabs { display: flex; border-bottom: 0.5px solid var(--border); background: var(--bg); position: sticky; top: 63px; z-index: 9; }
-  .tab { flex: 1; padding: 10px 4px; font-size: 12px; font-weight: 500; color: var(--text2); border: none; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; border-bottom: 2px solid transparent; transition: all .15s; }
-  .tab i { font-size: 20px; }
-  .tab.active { color: var(--green); border-bottom-color: var(--green); }
-  .content { flex: 1; overflow-y: auto; padding: 16px; -webkit-overflow-scrolling: touch; }
-  .section { display: none; }
-  .section.active { display: block; }
-  .form-card { background: var(--bg2); border-radius: var(--radius); padding: 14px; margin-bottom: 16px; }
-  .form-card h2 { font-size: 13px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
-  .fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-  .fg label { font-size: 13px; color: var(--text2); }
-  .fg input, .fg select { background: var(--bg); border: 0.5px solid var(--border2); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 15px; color: var(--text); width: 100%; outline: none; }
-  .fg input:focus, .fg select:focus { border-color: var(--green); }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .btn-primary { background: var(--green); color: #E1F5EE; border: none; border-radius: var(--radius-sm); padding: 12px 20px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn-primary:active { background: var(--green-dark); }
-  .btn-primary i { font-size: 18px; }
-  .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
-  .err-msg { font-size: 12px; color: #993C1D; margin-top: 4px; display: none; }
-  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-  .chip { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 99px; padding: 5px 13px; font-size: 12px; color: var(--text2); cursor: pointer; white-space: nowrap; }
-  .chip.active { background: var(--green); color: #E1F5EE; border-color: var(--green); }
-  .session-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; }
-  .sc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
-  .sc-loc { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-  .sc-loc i { font-size: 15px; color: var(--green); }
-  .sc-dt { font-size: 12px; color: var(--text2); margin-top: 3px; display: flex; align-items: center; gap: 4px; }
-  .sc-org { font-size: 11px; color: var(--text3); margin-top: 2px; }
-  .badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; }
-  .badge-open { background: var(--green-light); color: var(--green-text); }
-  .badge-full { background: var(--blue-light); color: var(--blue-text); }
-  .badge-done { background: var(--amber-light); color: var(--amber-text); }
-  .players-row { display: flex; gap: 6px; margin-bottom: 8px; }
-  .avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
-  .av-t { background: var(--green-mid); color: var(--green-text); }
-  .av-c { background: var(--coral); color: var(--coral-text); }
-  .av-e { background: var(--bg2); border: 1.5px dashed var(--border2); color: var(--text3); font-size: 18px; line-height: 1; }
-  .prog { height: 4px; background: var(--bg2); border-radius: 2px; margin: 6px 0 10px; overflow: hidden; }
-  .prog-fill { height: 100%; border-radius: 2px; background: var(--green); }
-  .prog-fill.full { background: #378ADD; }
-  .teams-box { border-top: 0.5px solid var(--border); padding-top: 10px; margin-top: 2px; }
-  .teams-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; margin-bottom: 8px; }
-  .team-col { display: flex; flex-direction: column; gap: 5px; }
-  .team-lbl { font-size: 10px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .05em; }
-  .team-player { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text); }
-  .vs { background: var(--bg2); border-radius: 6px; padding: 5px 8px; font-size: 11px; font-weight: 600; color: var(--text2); text-align: center; }
-  .result-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .result-score { font-size: 15px; font-weight: 600; }
-  .result-sets { font-size: 11px; color: var(--text2); }
-  .winner-badge { font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 99px; background: var(--green-light); color: var(--green-text); }
-  .winner-badge.b { background: var(--coral); color: var(--coral-text); }
-  .sc-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
-  .btn-action { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 7px 11px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text); display: flex; align-items: center; gap: 5px; }
-  .btn-action:active { background: var(--bg3); }
-  .btn-action i { font-size: 15px; }
-  .btn-del { background: none; border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 7px 10px; cursor: pointer; color: var(--text2); margin-left: auto; }
-  .btn-del:active { background: #FAECE7; color: #993C1D; }
-  .slots-txt { font-size: 12px; color: var(--text2); }
-  .empty { text-align: center; padding: 3rem 1rem; color: var(--text2); }
-  .empty i { font-size: 40px; display: block; margin-bottom: 10px; color: var(--border2); }
-  .empty p { font-size: 14px; }
-  .loading { text-align: center; padding: 3rem 1rem; color: var(--text2); }
-  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .sheet-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 100; align-items: flex-end; justify-content: center; }
-  .sheet-bg.open { display: flex; }
-  .sheet { background: var(--bg); border-radius: 20px 20px 0 0; padding: 20px 16px max(16px, env(safe-area-inset-bottom)); width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
-  .sheet-handle { width: 40px; height: 4px; background: var(--border2); border-radius: 2px; margin: 0 auto 16px; }
-  .sheet h3 { font-size: 17px; font-weight: 600; margin-bottom: 14px; }
-  .sheet-actions { display: flex; gap: 8px; margin-top: 14px; }
-  .btn-cancel { background: var(--bg2); border: none; border-radius: var(--radius-sm); padding: 11px 20px; font-size: 15px; font-weight: 500; cursor: pointer; color: var(--text); }
-  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-  .metric-card { background: var(--bg2); border-radius: var(--radius-sm); padding: 12px 14px; }
-  .metric-lbl { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
-  .metric-val { font-size: 26px; font-weight: 700; color: var(--text); }
-  .player-stat-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; }
-  .psc-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-  .rank-badge { margin-left: auto; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; }
-  .r1 { background: var(--amber-light); color: var(--amber-text); }
-  .r2 { background: var(--green-light); color: var(--green-text); }
-  .r3 { background: var(--blue-light); color: var(--blue-text); }
-  .rn { background: var(--bg2); color: var(--text2); }
-  .stats4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
-  .stat-item { text-align: center; }
-  .stat-num { font-size: 20px; font-weight: 700; }
-  .stat-lbl { font-size: 10px; color: var(--text2); margin-top: 1px; }
-  .bar-pair { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
-  .bar-w { flex: 1; height: 5px; background: var(--bg2); border-radius: 3px; overflow: hidden; }
-  .bar-fill-g { height: 100%; background: var(--green); border-radius: 3px; }
-  .bar-fill-r { height: 100%; background: var(--coral-dark); border-radius: 3px; }
-  .bar-txt { font-size: 11px; color: var(--text2); min-width: 42px; }
-  .sort-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-  .set-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .set-lbl { font-size: 13px; color: var(--text2); width: 48px; }
-  .set-inp { width: 56px; text-align: center; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: var(--radius-sm); padding: 8px 4px; font-size: 18px; font-weight: 600; color: var(--text); outline: none; }
-  .set-inp:focus { border-color: var(--green); }
-  .sets-count-row { display: flex; gap: 8px; margin-bottom: 12px; }
-  .sets-count-btn { flex: 1; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 9px; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--text); text-align: center; }
-  .sets-count-btn.active { background: var(--green); color: #E1F5EE; border-color: var(--green); }
-  .teams-preview { font-size: 13px; color: var(--text2); margin-bottom: 12px; padding: 10px 12px; background: var(--bg2); border-radius: var(--radius-sm); }
-  .teams-preview strong { color: var(--text); }
-  .toast { position: fixed; bottom: max(20px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%) translateY(80px); background: var(--text); color: var(--bg); font-size: 14px; padding: 10px 20px; border-radius: 99px; z-index: 200; transition: transform .3s; white-space: nowrap; }
-  .toast.show { transform: translateX(-50%) translateY(0); }
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg3);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text)}
+
+#loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:14px;background:var(--bg)}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading-screen p{font-size:14px;color:var(--text2)}
+#loading-sub{font-size:12px;color:var(--text3);margin-top:-8px;display:none}
+
+#login-screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:var(--bg)}
+.login-logo{width:72px;height:72px;border-radius:20px;background:var(--green);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.login-logo i{font-size:32px;color:#E1F5EE}
+.login-title{font-size:22px;font-weight:700;letter-spacing:-.4px;margin-bottom:4px}
+.login-sub{font-size:14px;color:var(--text2);margin-bottom:32px}
+.login-box{width:100%;max-width:340px}
+.login-box input{width:100%;padding:13px 14px;border:0.5px solid var(--border2);border-radius:var(--radius);font-size:16px;font-family:inherit;background:var(--bg);color:var(--text);margin-bottom:10px;outline:none;transition:border-color .15s}
+.login-box input:focus{border-color:var(--green)}
+.login-btn{width:100%;padding:14px;border-radius:var(--radius);border:none;background:var(--green);color:#E1F5EE;font-size:16px;font-family:inherit;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.login-btn:active{background:var(--green-dark)}
+.login-btn:disabled{opacity:.6;cursor:not-allowed}
+.login-err{color:var(--red);font-size:13px;text-align:center;margin-top:10px;min-height:18px}
+.login-footer{font-size:12px;color:var(--text3);margin-top:20px;text-align:center;line-height:1.6}
+
+#main-app{display:none}
+.app{max-width:480px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;background:var(--bg)}
+.topbar{background:var(--bg);border-bottom:0.5px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.topbar-icon{width:34px;height:34px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.topbar-icon i{font-size:17px;color:#E1F5EE}
+.topbar-titles{flex:1;min-width:0}
+.topbar h1{font-size:16px;font-weight:600}
+.topbar p{font-size:11px;color:var(--text2)}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:background .3s}
+.sync-dot.live{background:var(--green)}
+.sync-dot.err{background:var(--red)}
+
+.user-chip{display:flex;align-items:center;gap:6px;background:var(--bg2);border:0.5px solid var(--border);border-radius:99px;padding:4px 10px 4px 4px;font-size:12px;color:var(--text2);cursor:pointer;position:relative;user-select:none;flex-shrink:0}
+.user-avatar{width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#E1F5EE;flex-shrink:0}
+.user-menu{position:absolute;top:calc(100% + 6px);right:0;background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);min-width:200px;z-index:200;display:none;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.user-menu.open{display:block}
+.menu-header{padding:12px 16px 10px;border-bottom:0.5px solid var(--border)}
+.menu-email{font-size:12px;color:var(--text3);margin-top:2px}
+.menu-item{padding:12px 16px;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text)}
+.menu-item:hover{background:var(--bg2)}
+.menu-item i{font-size:17px;color:var(--text2)}
+.menu-item.danger{color:var(--red)}
+.menu-item.danger i{color:var(--red)}
+.menu-divider{height:0.5px;background:var(--border)}
+
+.install-banner{background:var(--green-light);color:var(--green-text);font-size:13px;padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:0.5px solid var(--border)}
+.install-banner i{font-size:18px;flex-shrink:0}
+.install-banner span{flex:1}
+.install-banner button{background:var(--green);color:#E1F5EE;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:500;cursor:pointer}
+
+.tabs{display:flex;border-bottom:0.5px solid var(--border);background:var(--bg);position:sticky;top:58px;z-index:9}
+.tab{flex:1;padding:10px 4px;font-size:12px;font-weight:500;color:var(--text2);border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;border-bottom:2px solid transparent;transition:all .15s}
+.tab i{font-size:20px}
+.tab.active{color:var(--green);border-bottom-color:var(--green)}
+
+.content{flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch}
+.section{display:none}
+.section.active{display:block}
+
+.form-card{background:var(--bg2);border-radius:var(--radius);padding:14px;margin-bottom:16px}
+.form-card h2{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.fg label{font-size:13px;color:var(--text2)}
+.fg input,.fg select{background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:10px 12px;font-size:15px;color:var(--text);width:100%;outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--green)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-primary{background:var(--green);color:#E1F5EE;border:none;border-radius:var(--radius-sm);padding:12px 20px;font-size:15px;font-weight:600;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:active{background:var(--green-dark)}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed}
+.btn-primary i{font-size:18px}
+.err-msg{font-size:12px;color:var(--red);margin-top:4px;display:none}
+
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.chip{background:var(--bg2);border:0.5px solid var(--border);border-radius:99px;padding:5px 13px;font-size:12px;color:var(--text2);cursor:pointer;white-space:nowrap}
+.chip.active{background:var(--green);color:#E1F5EE;border-color:var(--green)}
+
+.session-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.sc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.sc-loc{font-size:15px;font-weight:600;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.sc-loc i{font-size:15px;color:var(--green)}
+.sc-dt{font-size:12px;color:var(--text2);margin-top:3px;display:flex;align-items:center;gap:4px}
+.sc-org{font-size:11px;color:var(--text3);margin-top:2px}
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.badge-open{background:var(--green-light);color:var(--green-text)}
+.badge-full{background:var(--blue-light);color:var(--blue-text)}
+.badge-done{background:var(--amber-light);color:var(--amber-text)}
+.badge-mine{background:var(--green);color:#E1F5EE;font-size:10px;padding:2px 7px;border-radius:99px}
+
+.players-row{display:flex;gap:6px;margin-bottom:8px}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.av-t{background:var(--green-mid);color:var(--green-text)}
+.av-c{background:var(--coral);color:var(--coral-text)}
+.av-e{background:var(--bg2);border:1.5px dashed var(--border2);color:var(--text3);font-size:18px;line-height:1}
+
+.prog{height:4px;background:var(--bg2);border-radius:2px;margin:6px 0 10px;overflow:hidden}
+.prog-fill{height:100%;border-radius:2px;background:var(--green)}
+.prog-fill.full{background:#378ADD}
+
+.teams-box{border-top:0.5px solid var(--border);padding-top:10px;margin-top:2px}
+.teams-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.team-col{display:flex;flex-direction:column;gap:5px}
+.team-lbl{font-size:10px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+.team-player{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text)}
+.vs{background:var(--bg2);border-radius:6px;padding:5px 8px;font-size:11px;font-weight:600;color:var(--text2);text-align:center}
+.result-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.result-score{font-size:15px;font-weight:600}
+.result-sets{font-size:11px;color:var(--text2)}
+.winner-badge{font-size:11px;font-weight:500;padding:2px 9px;border-radius:99px;background:var(--green-light);color:var(--green-text)}
+.winner-badge.b{background:var(--coral);color:var(--coral-text)}
+
+.sc-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.btn-action{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:7px 11px;font-size:12px;font-weight:500;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:5px}
+.btn-action:active{background:var(--bg3)}
+.btn-action i{font-size:15px}
+.btn-del{background:none;border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:7px 10px;cursor:pointer;color:var(--text2);margin-left:auto}
+.btn-del:active{background:#FAECE7;color:#993C1D}
+.slots-txt{font-size:12px;color:var(--text2)}
+
+.empty{text-align:center;padding:3rem 1rem;color:var(--text2)}
+.empty i{font-size:40px;display:block;margin-bottom:10px;color:var(--border2)}
+.empty p{font-size:14px}
+.loading-inner{text-align:center;padding:3rem 1rem;color:var(--text2)}
+.loading-inner .spinner{margin:0 auto 12px}
+
+.sheet-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:flex-end;justify-content:center}
+.sheet-bg.open{display:flex}
+.sheet{background:var(--bg);border-radius:20px 20px 0 0;padding:20px 16px max(16px,env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+.sheet-handle{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px}
+.sheet h3{font-size:17px;font-weight:600;margin-bottom:14px}
+.sheet-actions{display:flex;gap:8px;margin-top:14px}
+.btn-cancel{background:var(--bg2);border:none;border-radius:var(--radius-sm);padding:11px 20px;font-size:15px;font-weight:500;cursor:pointer;color:var(--text)}
+
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.metric-card{background:var(--bg2);border-radius:var(--radius-sm);padding:12px 14px}
+.metric-lbl{font-size:12px;color:var(--text2);margin-bottom:4px}
+.metric-val{font-size:26px;font-weight:700;color:var(--text)}
+.player-stat-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.psc-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.rank-badge{margin-left:auto;font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px}
+.r1{background:var(--amber-light);color:var(--amber-text)}
+.r2{background:var(--green-light);color:var(--green-text)}
+.r3{background:var(--blue-light);color:var(--blue-text)}
+.rn{background:var(--bg2);color:var(--text2)}
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.stat-item{text-align:center}
+.stat-num{font-size:20px;font-weight:700}
+.stat-lbl{font-size:10px;color:var(--text2);margin-top:1px}
+.bar-pair{display:flex;align-items:center;gap:6px;margin-top:8px}
+.bar-w{flex:1;height:5px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.bar-fill-g{height:100%;background:var(--green);border-radius:3px}
+.bar-fill-r{height:100%;background:var(--coral-dark);border-radius:3px}
+.bar-txt{font-size:11px;color:var(--text2);min-width:42px}
+.sort-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+.set-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.set-lbl{font-size:13px;color:var(--text2);width:48px}
+.set-inp{width:56px;text-align:center;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:8px 4px;font-size:18px;font-weight:600;color:var(--text);outline:none}
+.set-inp:focus{border-color:var(--green)}
+.sets-count-row{display:flex;gap:8px;margin-bottom:12px}
+.sets-count-btn{flex:1;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:9px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text);text-align:center}
+.sets-count-btn.active{background:var(--green);color:#E1F5EE;border-color:var(--green)}
+.teams-preview{font-size:13px;color:var(--text2);margin-bottom:12px;padding:10px 12px;background:var(--bg2);border-radius:var(--radius-sm)}
+.teams-preview strong{color:var(--text)}
+.join-as-box{background:var(--bg2);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--text2);margin-bottom:14px}
+.join-as-box strong{color:var(--text)}
+.pw-info{font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6}
+
+.toast{position:fixed;bottom:max(20px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(80px);background:var(--text);color:var(--bg);font-size:14px;padding:10px 20px;border-radius:99px;z-index:300;transition:transform .3s;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
+
+<!-- LOADING -->
+<div id="loading-screen">
+  <div class="spinner"></div>
+  <p id="loading-msg">Spajanje...</p>
+  <p id="loading-sub"></p>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-logo"><i class="ti ti-ball-tennis"></i></div>
+  <div class="login-title">Padel prijave</div>
+  <div class="login-sub">Prijavi se za nastavak</div>
+  <div class="login-box">
+    <input type="email" id="inp-email" placeholder="Email" autocomplete="email" autocapitalize="off" inputmode="email">
+    <input type="password" id="inp-pass" placeholder="Lozinka" autocomplete="current-password">
+    <button class="login-btn" id="login-btn" onclick="prijava()">
+      <i class="ti ti-login" style="font-size:18px"></i>Prijava
+    </button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+  <div class="login-footer">Pristup samo za registrirane igrače.<br>Kontaktiraj admina za novi račun.</div>
+</div>
+
+<!-- MAIN APP -->
+<div id="main-app">
 <div class="app">
+
   <div class="topbar">
     <div class="topbar-icon"><i class="ti ti-ball-tennis"></i></div>
-    <div>
+    <div class="topbar-titles">
       <h1>Padel prijave</h1>
-      <p>Realtime sync</p>
+      <p id="sync-status">Spajanje...</p>
     </div>
-    <div class="sync-dot" id="sync-dot" title="Status veze"></div>
+    <div class="sync-dot" id="sync-dot"></div>
+    <div class="user-chip" id="user-chip" onclick="toggleMenu()">
+      <div class="user-avatar" id="user-avatar">?</div>
+      <span id="user-chip-name">...</span>
+      <i class="ti ti-chevron-down" style="font-size:12px"></i>
+      <div class="user-menu" id="user-menu">
+        <div class="menu-header">
+          <div style="font-size:14px;font-weight:500" id="menu-ime">—</div>
+          <div class="menu-email" id="menu-email">—</div>
+        </div>
+        <div class="menu-item" onclick="openChangePw()">
+          <i class="ti ti-lock"></i>Promjena lozinke
+        </div>
+        <div class="menu-divider"></div>
+        <div class="menu-item danger" onclick="odjava()">
+          <i class="ti ti-logout"></i>Odjava
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="install-banner" class="install-banner" style="display:none">
@@ -178,6 +279,7 @@
   </div>
 
   <div class="content">
+
     <div class="section active" id="sec-termini">
       <div class="chips" id="filter-chips">
         <div class="chip active" onclick="setFilter('sve',this)">Sve</div>
@@ -188,14 +290,13 @@
         <div class="chip" onclick="setFilter('Prečko',this)">Prečko</div>
         <div class="chip" onclick="setFilter('Dubrava',this)">Dubrava</div>
       </div>
-      <div id="sessions-list"><div class="loading"><div class="spinner"></div><p>Učitavanje...</p></div></div>
+      <div id="sessions-list"><div class="loading-inner"><div class="spinner"></div><p>Učitavanje...</p></div></div>
     </div>
 
     <div class="section" id="sec-dodaj">
       <div class="form-card">
         <h2>Novi termin</h2>
         <div class="row2">
-          <div class="fg"><label>Tvoje ime</label><input type="text" id="f-name" placeholder="npr. Marko K."></div>
           <div class="fg"><label>Lokacija</label>
             <select id="f-loc">
               <option value="">Odaberi...</option>
@@ -203,8 +304,8 @@
               <option>Velesajam</option><option>Prečko</option><option>Dubrava</option>
             </select>
           </div>
+          <div class="fg"><label>Datum i vrijeme</label><input type="datetime-local" id="f-dt"></div>
         </div>
-        <div class="fg"><label>Datum i vrijeme</label><input type="datetime-local" id="f-dt"></div>
         <div class="err-msg" id="f-err"></div>
         <button class="btn-primary" id="btn-add" onclick="addSession()"><i class="ti ti-plus"></i>Dodaj termin</button>
       </div>
@@ -220,7 +321,9 @@
       </div>
       <div id="player-stats"></div>
     </div>
+
   </div>
+</div>
 </div>
 
 <!-- JOIN SHEET -->
@@ -228,7 +331,7 @@
   <div class="sheet">
     <div class="sheet-handle"></div>
     <h3>Prijavi se na termin</h3>
-    <div class="fg"><label>Tvoje ime</label><input type="text" id="j-name" placeholder="npr. Ana M."></div>
+    <div class="join-as-box">Prijavljuješ se kao: <strong id="join-as-name">—</strong></div>
     <div class="err-msg" id="j-err"></div>
     <div class="sheet-actions">
       <button class="btn-primary" id="btn-join" onclick="confirmJoin()" style="flex:1"><i class="ti ti-check"></i>Prijavi se</button>
@@ -256,12 +359,31 @@
   </div>
 </div>
 
+<!-- CHANGE PASSWORD SHEET -->
+<div class="sheet-bg" id="pw-sheet">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>Promjena lozinke</h3>
+    <p class="pw-info">Nova lozinka mora imati najmanje 6 znakova.</p>
+    <div class="fg"><label>Nova lozinka</label><input type="password" id="pw-new" placeholder="Min. 6 znakova" autocomplete="new-password"></div>
+    <div class="fg"><label>Ponovi lozinku</label><input type="password" id="pw-rep" placeholder="Ponovi lozinku" autocomplete="new-password"></div>
+    <div class="err-msg" id="pw-err"></div>
+    <div class="sheet-actions">
+      <button class="btn-primary" id="btn-pw" onclick="confirmChangePw()" style="flex:1"><i class="ti ti-lock"></i>Promijeni</button>
+      <button class="btn-cancel" onclick="closeSheets()">Odustani</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
-<!-- Firebase -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc, onSnapshot, addDoc, updateDoc,
+         deleteDoc, query, orderBy, serverTimestamp }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtV7NLs-S6Xye1U34HSd2uzTHTkmN0p1c",
@@ -272,263 +394,368 @@ const firebaseConfig = {
   appId: "1:33039001809:web:329eb9d34b182c53e0fdf0"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const sessionsCol = collection(db, "sessions");
+const fbApp = initializeApp(firebaseConfig);
+const auth  = getAuth(fbApp);
+const db    = getFirestore(fbApp);
+const sessionsCol = collection(db, 'sessions');
 
-// ── State ──────────────────────────────────────────────────────────────────
-let sessions = [];
+let currentUser  = null;
+let sessions     = [];
 let activeFilter = 'sve';
-let sortMode = 'pobjede';
-let joiningId = null;
-let scoringId = null;
-let numSets = 2;
+let sortMode     = 'pobjede';
+let joiningId    = null;
+let scoringId    = null;
+let numSets      = 2;
 let deferredInstall = null;
+let unsubSessions = null;
 
-// ── Sync dot ───────────────────────────────────────────────────────────────
-function setSync(state) {
-  const dot = document.getElementById('sync-dot');
-  dot.className = 'sync-dot' + (state === 'live' ? ' live' : state === 'err' ? ' err' : '');
-  dot.title = state === 'live' ? 'Spojeno' : state === 'err' ? 'Greška veze' : 'Spajanje...';
-}
-
-// ── Realtime listener ──────────────────────────────────────────────────────
-const q = query(sessionsCol, orderBy("createdAt", "asc"));
-onSnapshot(q, (snap) => {
-  sessions = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
-  setSync('live');
-  renderSessions();
-  if (document.getElementById('sec-ljestvica').classList.contains('active')) renderStats();
-}, (err) => {
-  setSync('err');
-  console.error(err);
-});
-
-// ── Helpers ────────────────────────────────────────────────────────────────
 function ini(n) { return n.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
 function fmtDt(s) {
-  const d = new Date(s);
-  const days = ['ned','pon','uto','sri','čet','pet','sub'];
+  const d=new Date(s), days=['ned','pon','uto','sri','čet','pet','sub'];
   return `${days[d.getDay()]}, ${d.toLocaleDateString('hr-HR',{day:'2-digit',month:'2-digit',year:'numeric'})} u ${d.toLocaleTimeString('hr-HR',{hour:'2-digit',minute:'2-digit'})}`;
 }
 function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
-function setLoading(btnId, loading) {
-  const btn = document.getElementById(btnId);
-  if (btn) btn.disabled = loading;
+function setSync(state, msg) {
+  const dot=document.getElementById('sync-dot');
+  dot.className='sync-dot'+(state==='live'?' live':state==='err'?' err':'');
+  document.getElementById('sync-status').textContent=msg||(state==='live'?'Spojeno':state==='err'?'Greška veze':'Spajanje...');
+}
+function setBtn(id,v){const b=document.getElementById(id);if(b)b.disabled=v;}
+
+// ── Screens ──────────────────────────────────────────────────────────────
+function showLoading(msg){
+  document.getElementById('loading-screen').style.display='flex';
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-app').style.display='none';
+  if(msg) document.getElementById('loading-msg').textContent=msg;
+}
+function showLogin(){
+  _markAppStarted();
+  document.getElementById('loading-screen').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('main-app').style.display='none';
+}
+function showApp(){
+  _markAppStarted();
+  document.getElementById('loading-screen').style.display='none';
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-app').style.display='block';
+  const ime=currentUser.ime||currentUser.email.split('@')[0];
+  document.getElementById('user-avatar').textContent=ime.charAt(0).toUpperCase();
+  document.getElementById('user-chip-name').textContent=ime.split(' ')[0];
+  document.getElementById('menu-ime').textContent=ime;
+  document.getElementById('menu-email').textContent=currentUser.email;
+  startListener();
 }
 
-// ── Tab navigation ─────────────────────────────────────────────────────────
-window.showTab = (id, btn) => {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('sec-' + id).classList.add('active');
-  btn.classList.add('active');
-  if (id === 'ljestvica') renderStats();
-};
-
-// ── Filter ─────────────────────────────────────────────────────────────────
-window.setFilter = (loc, el) => {
-  activeFilter = loc;
-  document.querySelectorAll('#filter-chips .chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  renderSessions();
-};
-
-// ── Add session ────────────────────────────────────────────────────────────
-window.addSession = async () => {
-  const name = document.getElementById('f-name').value.trim();
-  const loc = document.getElementById('f-loc').value;
-  const dt = document.getElementById('f-dt').value;
-  const err = document.getElementById('f-err');
-  if (!name || !loc || !dt) { err.textContent = 'Molim popuni sva polja.'; err.style.display = 'block'; return; }
-  err.style.display = 'none';
-  setLoading('btn-add', true);
+// ── Auth state ────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, async user => {
+  diagLog('Auth: '+(user?user.email:'odjava'));
+  if(!user){ showLogin(); return; }
+  showLoading('Dohvaćam profil...');
   try {
-    await addDoc(sessionsCol, {
-      organizer: name, location: loc, datetime: dt,
-      players: [name], teams: null, result: null,
-      createdAt: serverTimestamp()
-    });
-    document.getElementById('f-name').value = '';
-    document.getElementById('f-loc').value = '';
-    document.getElementById('f-dt').value = '';
-    toast('Termin dodan!');
-    showTab('termini', document.querySelectorAll('.tab')[0]);
-  } catch(e) { toast('Greška: ' + e.message); }
-  setLoading('btn-add', false);
+    const snap = await Promise.race([
+      getDoc(doc(db,'korisnici',user.uid)),
+      new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),8000))
+    ]);
+    if(snap.exists&&snap.exists()){
+      const p=snap.data();
+      if(p.disabled===true){ await signOut(auth); showLogin(); document.getElementById('login-err').textContent='Tvoj račun je onemogućen.'; return; }
+      currentUser={uid:user.uid,email:user.email,...p};
+    } else {
+      currentUser={uid:user.uid,email:user.email,ime:user.email.split('@')[0],role:'user'};
+    }
+  } catch(e) {
+    diagLog('Profil err: '+e.message);
+    currentUser={uid:user.uid,email:user.email,ime:user.email.split('@')[0],role:'user'};
+  }
+  showApp();
+});
+
+// ── Login ────────────────────────────────────────────────────────────────
+window.prijava = async function(){
+  const email=document.getElementById('inp-email').value.trim();
+  const pass=document.getElementById('inp-pass').value;
+  const errEl=document.getElementById('login-err');
+  errEl.textContent='';
+  if(!email){errEl.textContent='Unesi email.';return;}
+  if(!pass){errEl.textContent='Unesi lozinku.';return;}
+  setBtn('login-btn',true);
+  try {
+    await signInWithEmailAndPassword(auth,email,pass);
+  } catch(e){
+    const msgs={
+      'auth/invalid-credential':'Pogrešan email ili lozinka.',
+      'auth/wrong-password':'Pogrešna lozinka.',
+      'auth/user-not-found':'Ne postoji korisnik s tim emailom.',
+      'auth/invalid-email':'Neispravan format emaila.',
+      'auth/user-disabled':'Ovaj račun je onemogućen.',
+      'auth/too-many-requests':'Previše pokušaja. Pričekaj malo.',
+      'auth/network-request-failed':'Nema internetske veze.'
+    };
+    errEl.textContent=msgs[e.code]||'Greška: '+e.message;
+  }
+  setBtn('login-btn',false);
 };
 
-// ── Join ───────────────────────────────────────────────────────────────────
-window.openJoin = (fid) => {
-  joiningId = fid;
-  document.getElementById('j-name').value = '';
-  document.getElementById('j-err').style.display = 'none';
+// ── Logout ───────────────────────────────────────────────────────────────
+window.odjava = async function(){
+  zatvoriMenu();
+  if(unsubSessions){unsubSessions();unsubSessions=null;}
+  sessions=[]; currentUser=null;
+  await signOut(auth);
+  document.getElementById('inp-pass').value='';
+  document.getElementById('login-err').textContent='';
+};
+
+// ── Change password ───────────────────────────────────────────────────────
+window.openChangePw=function(){
+  zatvoriMenu();
+  document.getElementById('pw-new').value='';
+  document.getElementById('pw-rep').value='';
+  document.getElementById('pw-err').style.display='none';
+  document.getElementById('pw-sheet').classList.add('open');
+};
+window.confirmChangePw=async function(){
+  const pw1=document.getElementById('pw-new').value;
+  const pw2=document.getElementById('pw-rep').value;
+  const err=document.getElementById('pw-err');
+  if(pw1.length<6){err.textContent='Min. 6 znakova.';err.style.display='block';return;}
+  if(pw1!==pw2){err.textContent='Lozinke se ne podudaraju.';err.style.display='block';return;}
+  err.style.display='none';
+  setBtn('btn-pw',true);
+  try {
+    await updatePassword(auth.currentUser,pw1);
+    closeSheets(); toast('Lozinka promijenjena!');
+  } catch(e){
+    err.textContent=e.code==='auth/requires-recent-login'?'Odjavi se i prijavi ponovo, pa pokušaj opet.':'Greška: '+e.message;
+    err.style.display='block';
+  }
+  setBtn('btn-pw',false);
+};
+
+// ── User menu ─────────────────────────────────────────────────────────────
+window.toggleMenu=()=>document.getElementById('user-menu').classList.toggle('open');
+window.zatvoriMenu=()=>document.getElementById('user-menu').classList.remove('open');
+document.addEventListener('click',e=>{if(!document.getElementById('user-chip')?.contains(e.target))zatvoriMenu();});
+
+// ── Firestore listener ────────────────────────────────────────────────────
+function startListener(){
+  if(unsubSessions){unsubSessions();unsubSessions=null;}
+  const q=query(sessionsCol,orderBy('createdAt','asc'));
+  unsubSessions=onSnapshot(q,snap=>{
+    sessions=snap.docs.map(d=>({firestoreId:d.id,...d.data()}));
+    setSync('live','Sinkronizirano · '+new Date().toLocaleTimeString('hr-HR',{hour:'2-digit',minute:'2-digit'}));
+    renderSessions();
+    if(document.getElementById('sec-ljestvica').classList.contains('active')) renderStats();
+  },err=>{setSync('err','Greška veze');console.error(err);});
+}
+
+// ── Tabs / filter / sort ──────────────────────────────────────────────────
+window.showTab=(id,btn)=>{
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='ljestvica') renderStats();
+};
+window.setFilter=(loc,el)=>{
+  activeFilter=loc;
+  document.querySelectorAll('#filter-chips .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active'); renderSessions();
+};
+window.setSort=(mode,el)=>{
+  sortMode=mode;
+  document.querySelectorAll('#sort-chips .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active'); renderStats();
+};
+
+// ── Add session ───────────────────────────────────────────────────────────
+window.addSession=async()=>{
+  const loc=document.getElementById('f-loc').value;
+  const dt=document.getElementById('f-dt').value;
+  const err=document.getElementById('f-err');
+  if(!loc||!dt){err.textContent='Molim popuni sva polja.';err.style.display='block';return;}
+  err.style.display='none';
+  const ime=currentUser.ime||currentUser.email.split('@')[0];
+  setBtn('btn-add',true);
+  try {
+    await addDoc(sessionsCol,{
+      organizer:ime,organizerUid:currentUser.uid,
+      location:loc,datetime:dt,
+      players:[ime],playerUids:[currentUser.uid],
+      teams:null,result:null,createdAt:serverTimestamp()
+    });
+    document.getElementById('f-loc').value='';
+    document.getElementById('f-dt').value='';
+    toast('Termin dodan!');
+    showTab('termini',document.querySelectorAll('.tab')[0]);
+  } catch(e){toast('Greška: '+e.message);}
+  setBtn('btn-add',false);
+};
+
+// ── Join ──────────────────────────────────────────────────────────────────
+window.openJoin=(fid)=>{
+  joiningId=fid;
+  const ime=currentUser.ime||currentUser.email.split('@')[0];
+  document.getElementById('join-as-name').textContent=ime;
+  document.getElementById('j-err').style.display='none';
   document.getElementById('join-sheet').classList.add('open');
 };
-window.confirmJoin = async () => {
-  const name = document.getElementById('j-name').value.trim();
-  const err = document.getElementById('j-err');
-  if (!name) { err.textContent = 'Unesi ime.'; err.style.display = 'block'; return; }
-  const s = sessions.find(x => x.firestoreId === joiningId);
-  if (!s) return;
-  if (s.players.length >= 4) { err.textContent = 'Termin je popunjen.'; err.style.display = 'block'; return; }
-  if (s.players.map(p=>p.toLowerCase()).includes(name.toLowerCase())) { err.textContent = 'Već si prijavljen/a.'; err.style.display = 'block'; return; }
-  setLoading('btn-join', true);
+window.confirmJoin=async()=>{
+  const s=sessions.find(x=>x.firestoreId===joiningId);
+  const err=document.getElementById('j-err');
+  if(!s) return;
+  if(s.players.length>=4){err.textContent='Termin je popunjen.';err.style.display='block';return;}
+  const puids=s.playerUids||[];
+  if(puids.includes(currentUser.uid)){err.textContent='Već si prijavljen/a.';err.style.display='block';return;}
+  const ime=currentUser.ime||currentUser.email.split('@')[0];
+  setBtn('btn-join',true);
   try {
-    await updateDoc(doc(db, 'sessions', joiningId), { players: [...s.players, name] });
+    await updateDoc(doc(db,'sessions',joiningId),{
+      players:[...s.players,ime],playerUids:[...puids,currentUser.uid]
+    });
     closeSheets(); toast('Prijavljen/a!');
-  } catch(e) { toast('Greška: ' + e.message); }
-  setLoading('btn-join', false);
+  } catch(e){toast('Greška: '+e.message);}
+  setBtn('btn-join',false);
 };
 
-// ── Teams ──────────────────────────────────────────────────────────────────
-window.assignTeams = async (fid) => {
-  const s = sessions.find(x => x.firestoreId === fid);
-  if (!s || s.players.length < 4) return;
+// ── Teams ─────────────────────────────────────────────────────────────────
+window.assignTeams=async(fid)=>{
+  const s=sessions.find(x=>x.firestoreId===fid);
+  if(!s||s.players.length<4) return;
   try {
-    await updateDoc(doc(db, 'sessions', fid), {
-      teams: { a: [s.players[0], s.players[2]], b: [s.players[1], s.players[3]] },
-      result: null
+    await updateDoc(doc(db,'sessions',fid),{
+      teams:{a:[s.players[0],s.players[2]],b:[s.players[1],s.players[3]]},result:null
     });
     toast('Parovi složeni!');
-  } catch(e) { toast('Greška: ' + e.message); }
+  } catch(e){toast('Greška: '+e.message);}
 };
-window.swapTeam = async (fid) => {
-  const s = sessions.find(x => x.firestoreId === fid);
-  if (!s || !s.teams) return;
+window.swapTeam=async(fid)=>{
+  const s=sessions.find(x=>x.firestoreId===fid);
+  if(!s||!s.teams) return;
   try {
-    await updateDoc(doc(db, 'sessions', fid), {
-      teams: { a: [s.teams.a[0], s.teams.b[1]], b: [s.teams.b[0], s.teams.a[1]] },
-      result: null
+    await updateDoc(doc(db,'sessions',fid),{
+      teams:{a:[s.teams.a[0],s.teams.b[1]],b:[s.teams.b[0],s.teams.a[1]]},result:null
     });
     toast('Parovi zamijenjeni!');
-  } catch(e) { toast('Greška: ' + e.message); }
+  } catch(e){toast('Greška: '+e.message);}
 };
 
-// ── Score ──────────────────────────────────────────────────────────────────
-window.openScore = (fid) => {
-  scoringId = fid;
-  const s = sessions.find(x => x.firestoreId === fid);
-  if (!s || !s.teams) return;
-  document.getElementById('score-title').textContent = `Rezultat — ${s.location}`;
-  document.getElementById('score-teams').innerHTML = `<strong>${s.teams.a.join(' & ')}</strong> vs <strong>${s.teams.b.join(' & ')}</strong>`;
-  document.getElementById('sc-err').style.display = 'none';
-  numSets = s.result ? s.result.sets.length : 2;
+// ── Score ─────────────────────────────────────────────────────────────────
+window.openScore=(fid)=>{
+  scoringId=fid;
+  const s=sessions.find(x=>x.firestoreId===fid);
+  if(!s||!s.teams) return;
+  document.getElementById('score-title').textContent=`Rezultat — ${s.location}`;
+  document.getElementById('score-teams').innerHTML=`<strong>${s.teams.a.join(' & ')}</strong> vs <strong>${s.teams.b.join(' & ')}</strong>`;
+  document.getElementById('sc-err').style.display='none';
+  numSets=s.result?s.result.sets.length:2;
   selectSets(numSets);
-  if (s.result) {
-    s.result.sets.forEach((set,i) => {
-      const ia = document.getElementById(`sa-${i}`);
-      const ib = document.getElementById(`sb-${i}`);
-      if (ia) ia.value = set.a;
-      if (ib) ib.value = set.b;
-    });
-  }
+  if(s.result) s.result.sets.forEach((set,i)=>{
+    const ia=document.getElementById(`sa-${i}`),ib=document.getElementById(`sb-${i}`);
+    if(ia) ia.value=set.a; if(ib) ib.value=set.b;
+  });
   document.getElementById('score-sheet').classList.add('open');
 };
-window.selectSets = (n) => {
-  numSets = n;
-  ['2','3'].forEach(k => document.getElementById(`sc-${k}`).classList.toggle('active', String(n) === k));
-  const s = sessions.find(x => x.firestoreId === scoringId);
-  const prev = s && s.result ? s.result.sets : [];
-  let html = '';
-  for (let i = 0; i < n; i++) {
-    html += `<div class="set-row"><span class="set-lbl">${i+1}. set</span>
+window.selectSets=(n)=>{
+  numSets=n;
+  ['2','3'].forEach(k=>document.getElementById(`sc-${k}`).classList.toggle('active',String(n)===k));
+  const s=sessions.find(x=>x.firestoreId===scoringId);
+  const prev=s&&s.result?s.result.sets:[];
+  let html='';
+  for(let i=0;i<n;i++){
+    html+=`<div class="set-row"><span class="set-lbl">${i+1}. set</span>
       <input class="set-inp" type="number" min="0" max="99" id="sa-${i}" value="${prev[i]?prev[i].a:''}" placeholder="0" inputmode="numeric">
       <span style="font-size:16px;color:var(--text2)">:</span>
       <input class="set-inp" type="number" min="0" max="99" id="sb-${i}" value="${prev[i]?prev[i].b:''}" placeholder="0" inputmode="numeric">
     </div>`;
   }
-  document.getElementById('sets-inputs').innerHTML = html;
+  document.getElementById('sets-inputs').innerHTML=html;
 };
-window.confirmScore = async () => {
-  const s = sessions.find(x => x.firestoreId === scoringId);
-  const err = document.getElementById('sc-err');
-  if (!s) return;
-  let sets = [], wA = 0, wB = 0;
-  for (let i = 0; i < numSets; i++) {
-    const a = parseInt(document.getElementById(`sa-${i}`).value);
-    const b = parseInt(document.getElementById(`sb-${i}`).value);
-    if (isNaN(a) || isNaN(b)) { err.textContent = `Unesi rezultat za ${i+1}. set.`; err.style.display = 'block'; return; }
-    sets.push({a,b});
-    if (a > b) wA++; else if (b > a) wB++;
+window.confirmScore=async()=>{
+  const s=sessions.find(x=>x.firestoreId===scoringId);
+  const err=document.getElementById('sc-err');
+  if(!s) return;
+  let sets=[],wA=0,wB=0;
+  for(let i=0;i<numSets;i++){
+    const a=parseInt(document.getElementById(`sa-${i}`).value);
+    const b=parseInt(document.getElementById(`sb-${i}`).value);
+    if(isNaN(a)||isNaN(b)){err.textContent=`Unesi rezultat za ${i+1}. set.`;err.style.display='block';return;}
+    sets.push({a,b}); if(a>b)wA++;else if(b>a)wB++;
   }
-  setLoading('btn-score', true);
+  setBtn('btn-score',true);
   try {
-    await updateDoc(doc(db, 'sessions', scoringId), {
-      result: { sets, winner: wA > wB ? 'a' : wB > wA ? 'b' : 'tie' }
-    });
+    await updateDoc(doc(db,'sessions',scoringId),{result:{sets,winner:wA>wB?'a':wB>wA?'b':'tie'}});
     closeSheets(); toast('Rezultat spremljen!');
-  } catch(e) { toast('Greška: ' + e.message); }
-  setLoading('btn-score', false);
+  } catch(e){toast('Greška: '+e.message);}
+  setBtn('btn-score',false);
 };
 
-// ── Delete ─────────────────────────────────────────────────────────────────
-window.deleteSession = async (fid) => {
-  if (!confirm('Obrisati ovaj termin?')) return;
-  try {
-    await deleteDoc(doc(db, 'sessions', fid));
-    toast('Termin obrisan.');
-  } catch(e) { toast('Greška: ' + e.message); }
+// ── Delete ────────────────────────────────────────────────────────────────
+window.deleteSession=async(fid)=>{
+  const s=sessions.find(x=>x.firestoreId===fid);
+  if(!s) return;
+  if(s.organizerUid!==currentUser.uid){toast('Samo organizator može obrisati termin.');return;}
+  if(!confirm('Obrisati ovaj termin?')) return;
+  try{await deleteDoc(doc(db,'sessions',fid));toast('Termin obrisan.');}
+  catch(e){toast('Greška: '+e.message);}
 };
 
-// ── Close sheets ───────────────────────────────────────────────────────────
-window.closeSheets = () => {
-  document.getElementById('join-sheet').classList.remove('open');
-  document.getElementById('score-sheet').classList.remove('open');
-};
-document.querySelectorAll('.sheet-bg').forEach(bg => {
-  bg.addEventListener('click', e => { if (e.target === bg) closeSheets(); });
+// ── Close sheets ──────────────────────────────────────────────────────────
+window.closeSheets=()=>document.querySelectorAll('.sheet-bg').forEach(s=>s.classList.remove('open'));
+document.querySelectorAll('.sheet-bg').forEach(bg=>{
+  bg.addEventListener('click',e=>{if(e.target===bg)closeSheets();});
 });
 
-// ── Render sessions ────────────────────────────────────────────────────────
-function renderSessions() {
-  const list = document.getElementById('sessions-list');
-  const filtered = activeFilter === 'sve' ? sessions : sessions.filter(s => s.location === activeFilter);
-  if (!filtered.length) {
-    list.innerHTML = `<div class="empty"><i class="ti ti-calendar-off"></i><p>Nema termina.<br>Dodaj prvi!</p></div>`;
+// ── Render sessions ───────────────────────────────────────────────────────
+function renderSessions(){
+  const list=document.getElementById('sessions-list');
+  const filtered=activeFilter==='sve'?sessions:sessions.filter(s=>s.location===activeFilter);
+  if(!filtered.length){
+    list.innerHTML=`<div class="empty"><i class="ti ti-calendar-off"></i><p>Nema termina.<br>Dodaj prvi!</p></div>`;
     return;
   }
-  const sorted = [...filtered].sort((a,b) => new Date(a.datetime) - new Date(b.datetime));
-  list.innerHTML = sorted.map(s => {
-    const fid = s.firestoreId;
-    const full = s.players.length >= 4;
-    const pct = (s.players.length / 4) * 100;
-    const hasDone = !!s.result;
-    const badgeCls = hasDone ? 'badge-done' : full ? 'badge-full' : 'badge-open';
-    const badgeTxt = hasDone ? 'Odigrano' : full ? 'Popunjeno' : 'Slobodno';
-    const AV = ['av-t','av-c','av-t','av-c'];
-    const slots = Array.from({length:4},(_,i) => {
-      if (s.players[i]) return `<div class="avatar ${AV[i]}" title="${s.players[i]}">${ini(s.players[i])}</div>`;
+  const sorted=[...filtered].sort((a,b)=>new Date(a.datetime)-new Date(b.datetime));
+  const myUid=currentUser.uid;
+  list.innerHTML=sorted.map(s=>{
+    const fid=s.firestoreId;
+    const full=s.players.length>=4;
+    const pct=(s.players.length/4)*100;
+    const hasDone=!!s.result;
+    const isOrg=s.organizerUid===myUid;
+    const isMine=(s.playerUids||[]).includes(myUid);
+    const bc=hasDone?'badge-done':full?'badge-full':'badge-open';
+    const bt=hasDone?'Odigrano':full?'Popunjeno':'Slobodno';
+    const AV=['av-t','av-c','av-t','av-c'];
+    const slots=Array.from({length:4},(_,i)=>{
+      if(s.players[i]) return `<div class="avatar ${AV[i]}" title="${s.players[i]}">${ini(s.players[i])}</div>`;
       return `<div class="avatar av-e">+</div>`;
     }).join('');
 
-    let teamsHtml = '';
-    if (s.teams) {
-      let resHtml = '';
-      if (s.result) {
-        const wA = s.result.sets.filter(st => st.a > st.b).length;
-        const wB = s.result.sets.filter(st => st.b > st.a).length;
-        const setsStr = s.result.sets.map(st => `${st.a}:${st.b}`).join(', ');
-        let wBadge = '';
-        if (s.result.winner === 'a') wBadge = `<span class="winner-badge">${s.teams.a[0].split(' ')[0]} & ${s.teams.a[1].split(' ')[0]}</span>`;
-        else if (s.result.winner === 'b') wBadge = `<span class="winner-badge b">${s.teams.b[0].split(' ')[0]} & ${s.teams.b[1].split(' ')[0]}</span>`;
-        else wBadge = `<span class="winner-badge" style="background:var(--bg2);color:var(--text2)">Neriješeno</span>`;
-        resHtml = `<div class="result-row"><span class="result-score">${wA} : ${wB}</span><span class="result-sets">(${setsStr})</span>${wBadge}</div>`;
+    let teamsHtml='';
+    if(s.teams){
+      let resHtml='';
+      if(s.result){
+        const wA=s.result.sets.filter(st=>st.a>st.b).length;
+        const wB=s.result.sets.filter(st=>st.b>st.a).length;
+        const ss=s.result.sets.map(st=>`${st.a}:${st.b}`).join(', ');
+        let wb='';
+        if(s.result.winner==='a') wb=`<span class="winner-badge">${s.teams.a[0].split(' ')[0]} & ${s.teams.a[1].split(' ')[0]}</span>`;
+        else if(s.result.winner==='b') wb=`<span class="winner-badge b">${s.teams.b[0].split(' ')[0]} & ${s.teams.b[1].split(' ')[0]}</span>`;
+        else wb=`<span class="winner-badge" style="background:var(--bg2);color:var(--text2)">Neriješeno</span>`;
+        resHtml=`<div class="result-row"><span class="result-score">${wA} : ${wB}</span><span class="result-sets">(${ss})</span>${wb}</div>`;
       }
-      teamsHtml = `<div class="teams-box">
+      teamsHtml=`<div class="teams-box">
         <div class="teams-grid">
-          <div class="team-col">
-            <div class="team-lbl">Tim 1</div>
+          <div class="team-col"><div class="team-lbl">Tim 1</div>
             ${s.teams.a.map(p=>`<div class="team-player"><div class="avatar av-t" style="width:26px;height:26px;font-size:10px">${ini(p)}</div>${p}</div>`).join('')}
           </div>
           <div class="vs">vs</div>
-          <div class="team-col">
-            <div class="team-lbl">Tim 2</div>
+          <div class="team-col"><div class="team-lbl">Tim 2</div>
             ${s.teams.b.map(p=>`<div class="team-player"><div class="avatar av-c" style="width:26px;height:26px;font-size:10px">${ini(p)}</div>${p}</div>`).join('')}
           </div>
         </div>${resHtml}
@@ -538,85 +765,75 @@ function renderSessions() {
     return `<div class="session-card">
       <div class="sc-top">
         <div>
-          <div class="sc-loc"><i class="ti ti-map-pin"></i>${s.location}</div>
+          <div class="sc-loc"><i class="ti ti-map-pin"></i>${s.location}${isMine?'<span class="badge-mine">ti</span>':''}</div>
           <div class="sc-dt"><i class="ti ti-clock" style="font-size:13px"></i>${fmtDt(s.datetime)}</div>
-          <div class="sc-org">Org: ${s.organizer}</div>
+          <div class="sc-org">Org: ${s.organizer}${isOrg?' · ti':''}  </div>
         </div>
-        <span class="badge ${badgeCls}">${badgeTxt}</span>
+        <span class="badge ${bc}">${bt}</span>
       </div>
       <div class="players-row">${slots}</div>
       <div class="prog"><div class="prog-fill ${full?'full':''}" style="width:${pct}%"></div></div>
       ${teamsHtml}
       <div class="sc-actions">
-        ${!full ? `<button class="btn-action" onclick="openJoin('${fid}')"><i class="ti ti-user-plus"></i>Prijavi se</button>` : ''}
-        ${full && !s.teams ? `<button class="btn-action" onclick="assignTeams('${fid}')"><i class="ti ti-users"></i>Složi parove</button>` : ''}
-        ${s.teams ? `<button class="btn-action" onclick="swapTeam('${fid}')"><i class="ti ti-switch-horizontal"></i>Zamijeni</button>` : ''}
-        ${s.teams ? `<button class="btn-action" onclick="openScore('${fid}')"><i class="ti ti-trophy"></i>${s.result?'Uredi':'Rezultat'}</button>` : ''}
+        ${!full&&!isMine?`<button class="btn-action" onclick="openJoin('${fid}')"><i class="ti ti-user-plus"></i>Prijavi se</button>`:''}
+        ${full&&!s.teams?`<button class="btn-action" onclick="assignTeams('${fid}')"><i class="ti ti-users"></i>Složi parove</button>`:''}
+        ${s.teams?`<button class="btn-action" onclick="swapTeam('${fid}')"><i class="ti ti-switch-horizontal"></i>Zamijeni</button>`:''}
+        ${s.teams?`<button class="btn-action" onclick="openScore('${fid}')"><i class="ti ti-trophy"></i>${s.result?'Uredi':'Rezultat'}</button>`:''}
         <span class="slots-txt">${s.players.length}/4</span>
-        <button class="btn-del" onclick="deleteSession('${fid}')" aria-label="Obriši"><i class="ti ti-trash" style="font-size:16px"></i></button>
+        ${isOrg?`<button class="btn-del" onclick="deleteSession('${fid}')" aria-label="Obriši"><i class="ti ti-trash" style="font-size:16px"></i></button>`:''}
       </div>
     </div>`;
   }).join('');
 }
 
-// ── Stats ──────────────────────────────────────────────────────────────────
-window.setSort = (mode, el) => {
-  sortMode = mode;
-  document.querySelectorAll('#sort-chips .chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  renderStats();
-};
-
-function computePlayerStats() {
-  const map = {};
-  sessions.forEach(s => {
-    s.players.forEach(p => { if (!map[p]) map[p] = {name:p,mecevi:0,pobjede:0,porazi:0,setsW:0,setsL:0}; });
-    if (!s.result || !s.teams) return;
-    const wA = s.result.sets.filter(st=>st.a>st.b).length;
-    const wB = s.result.sets.filter(st=>st.b>st.a).length;
-    [...s.teams.a,...s.teams.b].forEach(p => {
-      if (!map[p]) map[p] = {name:p,mecevi:0,pobjede:0,porazi:0,setsW:0,setsL:0};
+// ── Stats ─────────────────────────────────────────────────────────────────
+function computePlayerStats(){
+  const map={};
+  sessions.forEach(s=>{
+    s.players.forEach(p=>{if(!map[p])map[p]={name:p,mecevi:0,pobjede:0,porazi:0,setsW:0,setsL:0};});
+    if(!s.result||!s.teams) return;
+    const wA=s.result.sets.filter(st=>st.a>st.b).length;
+    const wB=s.result.sets.filter(st=>st.b>st.a).length;
+    [...s.teams.a,...s.teams.b].forEach(p=>{
+      if(!map[p])map[p]={name:p,mecevi:0,pobjede:0,porazi:0,setsW:0,setsL:0};
       map[p].mecevi++;
-      const inA = s.teams.a.includes(p);
-      if (s.result.winner === 'a') { if(inA){map[p].pobjede++;map[p].setsW+=wA;map[p].setsL+=wB;}else{map[p].porazi++;map[p].setsW+=wB;map[p].setsL+=wA;} }
-      else if (s.result.winner === 'b') { if(!inA){map[p].pobjede++;map[p].setsW+=wB;map[p].setsL+=wA;}else{map[p].porazi++;map[p].setsW+=wA;map[p].setsL+=wB;} }
-      else { if(inA){map[p].setsW+=wA;map[p].setsL+=wB;}else{map[p].setsW+=wB;map[p].setsL+=wA;} }
+      const inA=s.teams.a.includes(p);
+      if(s.result.winner==='a'){if(inA){map[p].pobjede++;map[p].setsW+=wA;map[p].setsL+=wB;}else{map[p].porazi++;map[p].setsW+=wB;map[p].setsL+=wA;}}
+      else if(s.result.winner==='b'){if(!inA){map[p].pobjede++;map[p].setsW+=wB;map[p].setsL+=wA;}else{map[p].porazi++;map[p].setsW+=wA;map[p].setsL+=wB;}}
+      else{if(inA){map[p].setsW+=wA;map[p].setsL+=wB;}else{map[p].setsW+=wB;map[p].setsL+=wA;}}
     });
   });
   return Object.values(map);
 }
-
-function renderStats() {
-  const stats = computePlayerStats();
-  const totalMecevi = sessions.filter(s=>s.result).length;
-  const totalSets = stats.reduce((a,p)=>a+p.setsW+p.setsL,0)/2;
-  document.getElementById('global-stats').innerHTML = `
+function renderStats(){
+  const stats=computePlayerStats();
+  const totalMecevi=sessions.filter(s=>s.result).length;
+  const totalSets=stats.reduce((a,p)=>a+p.setsW+p.setsL,0)/2;
+  document.getElementById('global-stats').innerHTML=`
     <div class="metric-card"><div class="metric-lbl">Mečevi</div><div class="metric-val">${totalMecevi}</div></div>
     <div class="metric-card"><div class="metric-lbl">Setova</div><div class="metric-val">${Math.round(totalSets)}</div></div>
     <div class="metric-card"><div class="metric-lbl">Igrači</div><div class="metric-val">${stats.length}</div></div>
     <div class="metric-card"><div class="metric-lbl">Lokacije</div><div class="metric-val">${new Set(sessions.map(s=>s.location)).size}</div></div>`;
-
-  const sorted = [...stats].sort((a,b) => {
-    if (sortMode==='pobjede') return b.pobjede-a.pobjede||b.mecevi-a.mecevi;
-    if (sortMode==='mecevi') return b.mecevi-a.mecevi||b.pobjede-a.pobjede;
-    if (sortMode==='setovi') return b.setsW-a.setsW;
-    if (sortMode==='postotak') { const pa=a.mecevi?a.pobjede/a.mecevi:0,pb=b.mecevi?b.pobjede/b.mecevi:0; return pb-pa||b.mecevi-a.mecevi; }
-    return 0;
+  const sorted=[...stats].sort((a,b)=>{
+    if(sortMode==='pobjede') return b.pobjede-a.pobjede||b.mecevi-a.mecevi;
+    if(sortMode==='mecevi')  return b.mecevi-a.mecevi||b.pobjede-a.pobjede;
+    if(sortMode==='setovi')  return b.setsW-a.setsW;
+    const pa=a.mecevi?a.pobjede/a.mecevi:0,pb=b.mecevi?b.pobjede/b.mecevi:0;
+    return pb-pa||b.mecevi-a.mecevi;
   });
-
-  const avCls = ['av-t','av-c','av-t','av-c','av-t','av-c'];
-  document.getElementById('player-stats').innerHTML = sorted.map((p,i) => {
-    const wp = p.mecevi ? Math.round(p.pobjede/p.mecevi*100) : 0;
-    const total = p.setsW+p.setsL;
-    const wPct = total ? Math.round(p.setsW/total*100) : 0;
-    const lPct = total ? Math.round(p.setsL/total*100) : 0;
-    let rCls='rn',rTxt=`#${i+1}`;
-    if(i===0){rCls='r1';rTxt='#1 🥇';}else if(i===1){rCls='r2';rTxt='#2';}else if(i===2){rCls='r3';rTxt='#3';}
+  const avCls=['av-t','av-c','av-t','av-c','av-t','av-c'];
+  document.getElementById('player-stats').innerHTML=sorted.map((p,i)=>{
+    const wp=p.mecevi?Math.round(p.pobjede/p.mecevi*100):0;
+    const tot=p.setsW+p.setsL;
+    const wPct=tot?Math.round(p.setsW/tot*100):0;
+    const lPct=tot?Math.round(p.setsL/tot*100):0;
+    let rc='rn',rt=`#${i+1}`;
+    if(i===0){rc='r1';rt='#1 🥇';}else if(i===1){rc='r2';rt='#2';}else if(i===2){rc='r3';rt='#3';}
     return `<div class="player-stat-card">
       <div class="psc-top">
         <div class="avatar ${avCls[i%6]}" style="width:40px;height:40px;font-size:13px">${ini(p.name)}</div>
         <div><div style="font-size:15px;font-weight:600">${p.name}</div><div style="font-size:12px;color:var(--text2)">${p.mecevi} mečeva · ${wp}% pobjeda</div></div>
-        <span class="rank-badge ${rCls}">${rTxt}</span>
+        <span class="rank-badge ${rc}">${rt}</span>
       </div>
       <div class="stats4">
         <div class="stat-item"><div class="stat-num" style="color:var(--green)">${p.pobjede}</div><div class="stat-lbl">Pobjede</div></div>
@@ -634,27 +851,55 @@ function renderStats() {
   }).join('');
 }
 
-// ── PWA Install ────────────────────────────────────────────────────────────
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault(); deferredInstall = e;
-  document.getElementById('install-banner').style.display = 'flex';
+// ── PWA install ───────────────────────────────────────────────────────────
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); deferredInstall=e;
+  document.getElementById('install-banner').style.display='flex';
 });
-window.installApp = () => {
-  if (!deferredInstall) return;
+window.installApp=()=>{
+  if(!deferredInstall) return;
   deferredInstall.prompt();
-  deferredInstall.userChoice.then(() => {
-    deferredInstall = null;
-    document.getElementById('install-banner').style.display = 'none';
-  });
+  deferredInstall.userChoice.then(()=>{deferredInstall=null;document.getElementById('install-banner').style.display='none';});
 };
-window.addEventListener('appinstalled', () => {
-  document.getElementById('install-banner').style.display = 'none';
-});
 
-// ── Service Worker ─────────────────────────────────────────────────────────
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/Padel/sw.js').catch(() => {});
+// ── Service Worker ────────────────────────────────────────────────────────
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/Padel/sw.js').catch(()=>{});
 }
+
+// ── Enter on login inputs ─────────────────────────────────────────────────
+document.getElementById('inp-pass').addEventListener('keydown',e=>{if(e.key==='Enter')prijava();});
+document.getElementById('inp-email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('inp-pass').focus();});
+</script>
+
+<script>
+// ── Diag log + hard timeout ───────────────────────────────────────────────
+window._diagLogs=[];
+function diagLog(msg){
+  const t=new Date().toLocaleTimeString('hr-HR');
+  window._diagLogs.push('['+t+'] '+msg);
+  const el=document.getElementById('loading-sub');
+  if(el){el.style.display='block';el.textContent=msg;}
+}
+let _appStarted=false;
+function _markAppStarted(){_appStarted=true;clearTimeout(_ht);}
+const _ht=setTimeout(()=>{
+  if(_appStarted) return;
+  const ls=document.getElementById('loading-screen');
+  if(!ls||ls.style.display==='none') return;
+  ls.innerHTML=`<div style="text-align:center;padding:24px 20px;max-width:360px;width:100%">
+    <div style="width:56px;height:56px;border-radius:50%;background:#fdf0f0;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+      <svg style="width:26px;height:26px;stroke:#b83232;fill:none;stroke-width:2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <div style="font-size:17px;font-weight:600;margin-bottom:6px">Greška pri spajanju</div>
+    <div style="font-size:13px;color:#6b6b67;margin-bottom:20px">Provjerite internetsku vezu.</div>
+    <div id="diag-log" style="background:#f1efeb;border-radius:8px;padding:10px 12px;margin-bottom:16px;font-size:11px;font-family:monospace;text-align:left;word-break:break-all;max-height:130px;overflow-y:auto;line-height:1.7"></div>
+    <button onclick="window.location.reload()" style="width:100%;padding:13px;border-radius:12px;border:none;background:#1D9E75;color:#E1F5EE;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;margin-bottom:10px">Pokušaj ponovo</button>
+    <button onclick="sessionStorage.clear();window.location.reload()" style="width:100%;padding:11px;border-radius:12px;border:0.5px solid #cbc8c2;background:transparent;color:#6b6b67;font-size:13px;font-family:inherit;cursor:pointer">Odjava i pokušaj ponovo</button>
+  </div>`;
+  const de=document.getElementById('diag-log');
+  if(de) de.textContent=(window._diagLogs||['(nema logova)']).join('\n');
+},12000);
 </script>
 </body>
 </html>
