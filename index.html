@@ -13,79 +13,49 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
   :root {
-    --green: #1D9E75;
-    --green-dark: #0F6E56;
-    --green-light: #E1F5EE;
-    --green-mid: #9FE1CB;
-    --green-text: #085041;
-    --coral: #F5C4B3;
-    --coral-text: #712B13;
-    --coral-dark: #D85A30;
-    --blue-light: #E6F1FB;
-    --blue-text: #0C447C;
-    --amber-light: #FAEEDA;
-    --amber-text: #633806;
-    --bg: #ffffff;
-    --bg2: #f5f5f3;
-    --bg3: #efefed;
-    --text: #1a1a18;
-    --text2: #6b6b67;
-    --text3: #a0a09c;
-    --border: rgba(0,0,0,0.12);
-    --border2: rgba(0,0,0,0.22);
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --green: #1D9E75; --green-dark: #0F6E56; --green-light: #E1F5EE;
+    --green-mid: #9FE1CB; --green-text: #085041;
+    --coral: #F5C4B3; --coral-text: #712B13; --coral-dark: #D85A30;
+    --blue-light: #E6F1FB; --blue-text: #0C447C;
+    --amber-light: #FAEEDA; --amber-text: #633806;
+    --bg: #ffffff; --bg2: #f5f5f3; --bg3: #efefed;
+    --text: #1a1a18; --text2: #6b6b67; --text3: #a0a09c;
+    --border: rgba(0,0,0,0.12); --border2: rgba(0,0,0,0.22);
+    --radius: 12px; --radius-sm: 8px;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #1a1a18;
-      --bg2: #252523;
-      --bg3: #2e2e2b;
-      --text: #f0efe8;
-      --text2: #a0a09c;
-      --text3: #6b6b67;
-      --border: rgba(255,255,255,0.1);
-      --border2: rgba(255,255,255,0.2);
-      --green-light: #04342C;
-      --green-text: #9FE1CB;
-      --coral: #4A1B0C;
-      --coral-text: #F0997B;
-      --blue-light: #042C53;
-      --blue-text: #85B7EB;
-      --amber-light: #412402;
-      --amber-text: #FAC775;
+      --bg: #1a1a18; --bg2: #252523; --bg3: #2e2e2b;
+      --text: #f0efe8; --text2: #a0a09c; --text3: #6b6b67;
+      --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
+      --green-light: #04342C; --green-text: #9FE1CB;
+      --coral: #4A1B0C; --coral-text: #F0997B;
+      --blue-light: #042C53; --blue-text: #85B7EB;
+      --amber-light: #412402; --amber-text: #FAC775;
     }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; background: var(--bg3); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); }
-
-  /* Layout */
   .app { max-width: 480px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; background: var(--bg); }
   .topbar { background: var(--bg); border-bottom: 0.5px solid var(--border); padding: 14px 16px 12px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 10; }
   .topbar-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--green); display: flex; align-items: center; justify-content: center; }
   .topbar-icon i { font-size: 18px; color: #E1F5EE; }
   .topbar h1 { font-size: 17px; font-weight: 600; }
   .topbar p { font-size: 12px; color: var(--text2); }
+  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; margin-left: auto; flex-shrink: 0; transition: background .3s; }
+  .sync-dot.live { background: var(--green); }
+  .sync-dot.err { background: var(--coral-dark); }
   .install-banner { background: var(--green-light); color: var(--green-text); font-size: 13px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; border-bottom: 0.5px solid var(--border); }
   .install-banner i { font-size: 18px; flex-shrink: 0; }
   .install-banner span { flex: 1; }
   .install-banner button { background: var(--green); color: #E1F5EE; border: none; border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; }
-
-  /* Nav tabs */
   .tabs { display: flex; border-bottom: 0.5px solid var(--border); background: var(--bg); position: sticky; top: 63px; z-index: 9; }
   .tab { flex: 1; padding: 10px 4px; font-size: 12px; font-weight: 500; color: var(--text2); border: none; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; border-bottom: 2px solid transparent; transition: all .15s; }
   .tab i { font-size: 20px; }
   .tab.active { color: var(--green); border-bottom-color: var(--green); }
-
-  /* Scroll content */
   .content { flex: 1; overflow-y: auto; padding: 16px; -webkit-overflow-scrolling: touch; }
-
-  /* Sections */
   .section { display: none; }
   .section.active { display: block; }
-
-  /* Forms */
   .form-card { background: var(--bg2); border-radius: var(--radius); padding: 14px; margin-bottom: 16px; }
   .form-card h2 { font-size: 13px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
   .fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
@@ -96,14 +66,11 @@
   .btn-primary { background: var(--green); color: #E1F5EE; border: none; border-radius: var(--radius-sm); padding: 12px 20px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .btn-primary:active { background: var(--green-dark); }
   .btn-primary i { font-size: 18px; }
+  .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
   .err-msg { font-size: 12px; color: #993C1D; margin-top: 4px; display: none; }
-
-  /* Filter chips */
   .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
   .chip { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 99px; padding: 5px 13px; font-size: 12px; color: var(--text2); cursor: pointer; white-space: nowrap; }
   .chip.active { background: var(--green); color: #E1F5EE; border-color: var(--green); }
-
-  /* Session cards */
   .session-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; }
   .sc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
   .sc-loc { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
@@ -114,20 +81,14 @@
   .badge-open { background: var(--green-light); color: var(--green-text); }
   .badge-full { background: var(--blue-light); color: var(--blue-text); }
   .badge-done { background: var(--amber-light); color: var(--amber-text); }
-
-  /* Players row */
   .players-row { display: flex; gap: 6px; margin-bottom: 8px; }
   .avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
   .av-t { background: var(--green-mid); color: var(--green-text); }
   .av-c { background: var(--coral); color: var(--coral-text); }
   .av-e { background: var(--bg2); border: 1.5px dashed var(--border2); color: var(--text3); font-size: 18px; line-height: 1; }
-
-  /* Progress */
   .prog { height: 4px; background: var(--bg2); border-radius: 2px; margin: 6px 0 10px; overflow: hidden; }
   .prog-fill { height: 100%; border-radius: 2px; background: var(--green); }
   .prog-fill.full { background: #378ADD; }
-
-  /* Teams */
   .teams-box { border-top: 0.5px solid var(--border); padding-top: 10px; margin-top: 2px; }
   .teams-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; margin-bottom: 8px; }
   .team-col { display: flex; flex-direction: column; gap: 5px; }
@@ -139,8 +100,6 @@
   .result-sets { font-size: 11px; color: var(--text2); }
   .winner-badge { font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 99px; background: var(--green-light); color: var(--green-text); }
   .winner-badge.b { background: var(--coral); color: var(--coral-text); }
-
-  /* Card actions */
   .sc-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
   .btn-action { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 7px 11px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text); display: flex; align-items: center; gap: 5px; }
   .btn-action:active { background: var(--bg3); }
@@ -148,13 +107,12 @@
   .btn-del { background: none; border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 7px 10px; cursor: pointer; color: var(--text2); margin-left: auto; }
   .btn-del:active { background: #FAECE7; color: #993C1D; }
   .slots-txt { font-size: 12px; color: var(--text2); }
-
-  /* Empty */
   .empty { text-align: center; padding: 3rem 1rem; color: var(--text2); }
   .empty i { font-size: 40px; display: block; margin-bottom: 10px; color: var(--border2); }
   .empty p { font-size: 14px; }
-
-  /* Modal / bottom sheet */
+  .loading { text-align: center; padding: 3rem 1rem; color: var(--text2); }
+  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
   .sheet-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 100; align-items: flex-end; justify-content: center; }
   .sheet-bg.open { display: flex; }
   .sheet { background: var(--bg); border-radius: 20px 20px 0 0; padding: 20px 16px max(16px, env(safe-area-inset-bottom)); width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
@@ -162,8 +120,6 @@
   .sheet h3 { font-size: 17px; font-weight: 600; margin-bottom: 14px; }
   .sheet-actions { display: flex; gap: 8px; margin-top: 14px; }
   .btn-cancel { background: var(--bg2); border: none; border-radius: var(--radius-sm); padding: 11px 20px; font-size: 15px; font-weight: 500; cursor: pointer; color: var(--text); }
-
-  /* Stats section */
   .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
   .metric-card { background: var(--bg2); border-radius: var(--radius-sm); padding: 12px 14px; }
   .metric-lbl { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
@@ -185,8 +141,6 @@
   .bar-fill-r { height: 100%; background: var(--coral-dark); border-radius: 3px; }
   .bar-txt { font-size: 11px; color: var(--text2); min-width: 42px; }
   .sort-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-
-  /* Sets modal inputs */
   .set-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
   .set-lbl { font-size: 13px; color: var(--text2); width: 48px; }
   .set-inp { width: 56px; text-align: center; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: var(--radius-sm); padding: 8px 4px; font-size: 18px; font-weight: 600; color: var(--text); outline: none; }
@@ -196,8 +150,6 @@
   .sets-count-btn.active { background: var(--green); color: #E1F5EE; border-color: var(--green); }
   .teams-preview { font-size: 13px; color: var(--text2); margin-bottom: 12px; padding: 10px 12px; background: var(--bg2); border-radius: var(--radius-sm); }
   .teams-preview strong { color: var(--text); }
-
-  /* Toast */
   .toast { position: fixed; bottom: max(20px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%) translateY(80px); background: var(--text); color: var(--bg); font-size: 14px; padding: 10px 20px; border-radius: 99px; z-index: 200; transition: transform .3s; white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
@@ -208,8 +160,9 @@
     <div class="topbar-icon"><i class="ti ti-ball-tennis"></i></div>
     <div>
       <h1>Padel prijave</h1>
-      <p>Organiziraj termine i prati rezultate</p>
+      <p>Realtime sync</p>
     </div>
+    <div class="sync-dot" id="sync-dot" title="Status veze"></div>
   </div>
 
   <div id="install-banner" class="install-banner" style="display:none">
@@ -225,8 +178,6 @@
   </div>
 
   <div class="content">
-
-    <!-- TERMINI -->
     <div class="section active" id="sec-termini">
       <div class="chips" id="filter-chips">
         <div class="chip active" onclick="setFilter('sve',this)">Sve</div>
@@ -237,10 +188,9 @@
         <div class="chip" onclick="setFilter('Prečko',this)">Prečko</div>
         <div class="chip" onclick="setFilter('Dubrava',this)">Dubrava</div>
       </div>
-      <div id="sessions-list"></div>
+      <div id="sessions-list"><div class="loading"><div class="spinner"></div><p>Učitavanje...</p></div></div>
     </div>
 
-    <!-- DODAJ TERMIN -->
     <div class="section" id="sec-dodaj">
       <div class="form-card">
         <h2>Novi termin</h2>
@@ -256,11 +206,10 @@
         </div>
         <div class="fg"><label>Datum i vrijeme</label><input type="datetime-local" id="f-dt"></div>
         <div class="err-msg" id="f-err"></div>
-        <button class="btn-primary" onclick="addSession()"><i class="ti ti-plus"></i>Dodaj termin</button>
+        <button class="btn-primary" id="btn-add" onclick="addSession()"><i class="ti ti-plus"></i>Dodaj termin</button>
       </div>
     </div>
 
-    <!-- LJESTVICA -->
     <div class="section" id="sec-ljestvica">
       <div class="metrics-grid" id="global-stats"></div>
       <div class="sort-chips" id="sort-chips">
@@ -271,7 +220,6 @@
       </div>
       <div id="player-stats"></div>
     </div>
-
   </div>
 </div>
 
@@ -283,7 +231,7 @@
     <div class="fg"><label>Tvoje ime</label><input type="text" id="j-name" placeholder="npr. Ana M."></div>
     <div class="err-msg" id="j-err"></div>
     <div class="sheet-actions">
-      <button class="btn-primary" onclick="confirmJoin()" style="flex:1"><i class="ti ti-check"></i>Prijavi se</button>
+      <button class="btn-primary" id="btn-join" onclick="confirmJoin()" style="flex:1"><i class="ti ti-check"></i>Prijavi se</button>
       <button class="btn-cancel" onclick="closeSheets()">Odustani</button>
     </div>
   </div>
@@ -302,7 +250,7 @@
     <div id="sets-inputs"></div>
     <div class="err-msg" id="sc-err"></div>
     <div class="sheet-actions">
-      <button class="btn-primary" onclick="confirmScore()" style="flex:1"><i class="ti ti-device-floppy"></i>Spremi</button>
+      <button class="btn-primary" id="btn-score" onclick="confirmScore()" style="flex:1"><i class="ti ti-device-floppy"></i>Spremi</button>
       <button class="btn-cancel" onclick="closeSheets()">Odustani</button>
     </div>
   </div>
@@ -310,11 +258,26 @@
 
 <div class="toast" id="toast"></div>
 
-<script>
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAtV7NLs-S6Xye1U34HSd2uzTHTkmN0p1c",
+  authDomain: "padel-b3545.firebaseapp.com",
+  projectId: "padel-b3545",
+  storageBucket: "padel-b3545.firebasestorage.app",
+  messagingSenderId: "33039001809",
+  appId: "1:33039001809:web:329eb9d34b182c53e0fdf0"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const sessionsCol = collection(db, "sessions");
+
 // ── State ──────────────────────────────────────────────────────────────────
-const STORE_KEY = 'padel_sessions';
 let sessions = [];
-let nextId = 1;
 let activeFilter = 'sve';
 let sortMode = 'pobjede';
 let joiningId = null;
@@ -322,30 +285,26 @@ let scoringId = null;
 let numSets = 2;
 let deferredInstall = null;
 
-const AV_COLORS = ['av-t','av-c','av-t','av-c'];
-
-// ── Persistence ───────────────────────────────────────────────────────────
-function save() {
-  try { localStorage.setItem(STORE_KEY, JSON.stringify({ sessions, nextId })); } catch(e) {}
-}
-function load() {
-  try {
-    const d = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
-    if (d) { sessions = d.sessions || []; nextId = d.nextId || 1; }
-  } catch(e) {}
-  if (sessions.length === 0) {
-    sessions = [
-      { id: nextId++, organizer: 'Tomislav B.', location: 'Embassy', datetime: '2025-06-14T10:00', players: ['Tomislav B.', 'Iva R.'], teams: null, result: null },
-      { id: nextId++, organizer: 'Ana M.', location: 'Klara', datetime: '2025-06-15T18:00', players: ['Ana M.'], teams: null, result: null },
-      { id: nextId++, organizer: 'Pero K.', location: 'Velesajam', datetime: '2025-06-16T09:00', players: ['Pero K.', 'Darko S.', 'Maja T.', 'Luka P.'], teams: { a: ['Pero K.', 'Darko S.'], b: ['Maja T.', 'Luka P.'] }, result: { sets: [{a:6,b:4},{a:4,b:6},{a:7,b:5}], winner: 'a' } },
-      { id: nextId++, organizer: 'Tomislav B.', location: 'Embassy', datetime: '2025-05-20T19:00', players: ['Tomislav B.', 'Luka P.', 'Darko S.', 'Iva R.'], teams: { a: ['Tomislav B.', 'Luka P.'], b: ['Darko S.', 'Iva R.'] }, result: { sets: [{a:3,b:6},{a:6,b:4},{a:2,b:6}], winner: 'b' } },
-      { id: nextId++, organizer: 'Maja T.', location: 'Prečko', datetime: '2025-05-10T10:00', players: ['Maja T.', 'Pero K.', 'Ana M.', 'Iva R.'], teams: { a: ['Maja T.', 'Pero K.'], b: ['Ana M.', 'Iva R.'] }, result: { sets: [{a:6,b:2},{a:6,b:3}], winner: 'a' } },
-    ];
-    save();
-  }
+// ── Sync dot ───────────────────────────────────────────────────────────────
+function setSync(state) {
+  const dot = document.getElementById('sync-dot');
+  dot.className = 'sync-dot' + (state === 'live' ? ' live' : state === 'err' ? ' err' : '');
+  dot.title = state === 'live' ? 'Spojeno' : state === 'err' ? 'Greška veze' : 'Spajanje...';
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────
+// ── Realtime listener ──────────────────────────────────────────────────────
+const q = query(sessionsCol, orderBy("createdAt", "asc"));
+onSnapshot(q, (snap) => {
+  sessions = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
+  setSync('live');
+  renderSessions();
+  if (document.getElementById('sec-ljestvica').classList.contains('active')) renderStats();
+}, (err) => {
+  setSync('err');
+  console.error(err);
+});
+
+// ── Helpers ────────────────────────────────────────────────────────────────
 function ini(n) { return n.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
 function fmtDt(s) {
   const d = new Date(s);
@@ -358,84 +317,103 @@ function toast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
+function setLoading(btnId, loading) {
+  const btn = document.getElementById(btnId);
+  if (btn) btn.disabled = loading;
+}
 
-// ── Tab navigation ────────────────────────────────────────────────────────
-function showTab(id, btn) {
+// ── Tab navigation ─────────────────────────────────────────────────────────
+window.showTab = (id, btn) => {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('sec-' + id).classList.add('active');
   btn.classList.add('active');
   if (id === 'ljestvica') renderStats();
-  if (id === 'termini') renderSessions();
-}
+};
 
-// ── Filter ────────────────────────────────────────────────────────────────
-function setFilter(loc, el) {
+// ── Filter ─────────────────────────────────────────────────────────────────
+window.setFilter = (loc, el) => {
   activeFilter = loc;
   document.querySelectorAll('#filter-chips .chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
   renderSessions();
-}
+};
 
-// ── Add session ───────────────────────────────────────────────────────────
-function addSession() {
+// ── Add session ────────────────────────────────────────────────────────────
+window.addSession = async () => {
   const name = document.getElementById('f-name').value.trim();
   const loc = document.getElementById('f-loc').value;
   const dt = document.getElementById('f-dt').value;
   const err = document.getElementById('f-err');
   if (!name || !loc || !dt) { err.textContent = 'Molim popuni sva polja.'; err.style.display = 'block'; return; }
   err.style.display = 'none';
-  sessions.push({ id: nextId++, organizer: name, location: loc, datetime: dt, players: [name], teams: null, result: null });
-  save();
-  document.getElementById('f-name').value = '';
-  document.getElementById('f-loc').value = '';
-  document.getElementById('f-dt').value = '';
-  toast('Termin dodan!');
-  showTab('termini', document.querySelectorAll('.tab')[0]);
-}
+  setLoading('btn-add', true);
+  try {
+    await addDoc(sessionsCol, {
+      organizer: name, location: loc, datetime: dt,
+      players: [name], teams: null, result: null,
+      createdAt: serverTimestamp()
+    });
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-loc').value = '';
+    document.getElementById('f-dt').value = '';
+    toast('Termin dodan!');
+    showTab('termini', document.querySelectorAll('.tab')[0]);
+  } catch(e) { toast('Greška: ' + e.message); }
+  setLoading('btn-add', false);
+};
 
-// ── Join ──────────────────────────────────────────────────────────────────
-function openJoin(id) {
-  joiningId = id;
+// ── Join ───────────────────────────────────────────────────────────────────
+window.openJoin = (fid) => {
+  joiningId = fid;
   document.getElementById('j-name').value = '';
   document.getElementById('j-err').style.display = 'none';
   document.getElementById('join-sheet').classList.add('open');
-}
-function confirmJoin() {
+};
+window.confirmJoin = async () => {
   const name = document.getElementById('j-name').value.trim();
   const err = document.getElementById('j-err');
   if (!name) { err.textContent = 'Unesi ime.'; err.style.display = 'block'; return; }
-  const s = sessions.find(x => x.id === joiningId);
+  const s = sessions.find(x => x.firestoreId === joiningId);
   if (!s) return;
   if (s.players.length >= 4) { err.textContent = 'Termin je popunjen.'; err.style.display = 'block'; return; }
   if (s.players.map(p=>p.toLowerCase()).includes(name.toLowerCase())) { err.textContent = 'Već si prijavljen/a.'; err.style.display = 'block'; return; }
-  s.players.push(name);
-  save(); closeSheets(); renderSessions();
-  toast('Prijavljen/a!');
-}
+  setLoading('btn-join', true);
+  try {
+    await updateDoc(doc(db, 'sessions', joiningId), { players: [...s.players, name] });
+    closeSheets(); toast('Prijavljen/a!');
+  } catch(e) { toast('Greška: ' + e.message); }
+  setLoading('btn-join', false);
+};
 
-// ── Teams ─────────────────────────────────────────────────────────────────
-function assignTeams(id) {
-  const s = sessions.find(x => x.id === id);
+// ── Teams ──────────────────────────────────────────────────────────────────
+window.assignTeams = async (fid) => {
+  const s = sessions.find(x => x.firestoreId === fid);
   if (!s || s.players.length < 4) return;
-  s.teams = { a: [s.players[0], s.players[2]], b: [s.players[1], s.players[3]] };
-  s.result = null;
-  save(); renderSessions();
-  toast('Parovi složeni!');
-}
-function swapTeam(id) {
-  const s = sessions.find(x => x.id === id);
+  try {
+    await updateDoc(doc(db, 'sessions', fid), {
+      teams: { a: [s.players[0], s.players[2]], b: [s.players[1], s.players[3]] },
+      result: null
+    });
+    toast('Parovi složeni!');
+  } catch(e) { toast('Greška: ' + e.message); }
+};
+window.swapTeam = async (fid) => {
+  const s = sessions.find(x => x.firestoreId === fid);
   if (!s || !s.teams) return;
-  s.teams = { a: [s.teams.a[0], s.teams.b[1]], b: [s.teams.b[0], s.teams.a[1]] };
-  s.result = null;
-  save(); renderSessions();
-  toast('Parovi zamijenjeni!');
-}
+  try {
+    await updateDoc(doc(db, 'sessions', fid), {
+      teams: { a: [s.teams.a[0], s.teams.b[1]], b: [s.teams.b[0], s.teams.a[1]] },
+      result: null
+    });
+    toast('Parovi zamijenjeni!');
+  } catch(e) { toast('Greška: ' + e.message); }
+};
 
-// ── Score ─────────────────────────────────────────────────────────────────
-function openScore(id) {
-  scoringId = id;
-  const s = sessions.find(x => x.id === id);
+// ── Score ──────────────────────────────────────────────────────────────────
+window.openScore = (fid) => {
+  scoringId = fid;
+  const s = sessions.find(x => x.firestoreId === fid);
   if (!s || !s.teams) return;
   document.getElementById('score-title').textContent = `Rezultat — ${s.location}`;
   document.getElementById('score-teams').innerHTML = `<strong>${s.teams.a.join(' & ')}</strong> vs <strong>${s.teams.b.join(' & ')}</strong>`;
@@ -451,28 +429,24 @@ function openScore(id) {
     });
   }
   document.getElementById('score-sheet').classList.add('open');
-}
-function selectSets(n) {
+};
+window.selectSets = (n) => {
   numSets = n;
-  ['2','3'].forEach(k => {
-    document.getElementById(`sc-${k}`).classList.toggle('active', String(n) === k);
-  });
+  ['2','3'].forEach(k => document.getElementById(`sc-${k}`).classList.toggle('active', String(n) === k));
+  const s = sessions.find(x => x.firestoreId === scoringId);
+  const prev = s && s.result ? s.result.sets : [];
   let html = '';
-  const s = sessions.find(x => x.id === scoringId);
-  const prevSets = s && s.result ? s.result.sets : [];
   for (let i = 0; i < n; i++) {
-    const pA = prevSets[i] ? prevSets[i].a : '';
-    const pB = prevSets[i] ? prevSets[i].b : '';
     html += `<div class="set-row"><span class="set-lbl">${i+1}. set</span>
-      <input class="set-inp" type="number" min="0" max="99" id="sa-${i}" value="${pA}" placeholder="0" inputmode="numeric">
+      <input class="set-inp" type="number" min="0" max="99" id="sa-${i}" value="${prev[i]?prev[i].a:''}" placeholder="0" inputmode="numeric">
       <span style="font-size:16px;color:var(--text2)">:</span>
-      <input class="set-inp" type="number" min="0" max="99" id="sb-${i}" value="${pB}" placeholder="0" inputmode="numeric">
+      <input class="set-inp" type="number" min="0" max="99" id="sb-${i}" value="${prev[i]?prev[i].b:''}" placeholder="0" inputmode="numeric">
     </div>`;
   }
   document.getElementById('sets-inputs').innerHTML = html;
-}
-function confirmScore() {
-  const s = sessions.find(x => x.id === scoringId);
+};
+window.confirmScore = async () => {
+  const s = sessions.find(x => x.firestoreId === scoringId);
   const err = document.getElementById('sc-err');
   if (!s) return;
   let sets = [], wA = 0, wB = 0;
@@ -483,25 +457,35 @@ function confirmScore() {
     sets.push({a,b});
     if (a > b) wA++; else if (b > a) wB++;
   }
-  s.result = { sets, winner: wA > wB ? 'a' : wB > wA ? 'b' : 'tie' };
-  save(); closeSheets(); renderSessions();
-  toast('Rezultat spremljen!');
-}
+  setLoading('btn-score', true);
+  try {
+    await updateDoc(doc(db, 'sessions', scoringId), {
+      result: { sets, winner: wA > wB ? 'a' : wB > wA ? 'b' : 'tie' }
+    });
+    closeSheets(); toast('Rezultat spremljen!');
+  } catch(e) { toast('Greška: ' + e.message); }
+  setLoading('btn-score', false);
+};
 
-// ── Delete ────────────────────────────────────────────────────────────────
-function deleteSession(id) {
+// ── Delete ─────────────────────────────────────────────────────────────────
+window.deleteSession = async (fid) => {
   if (!confirm('Obrisati ovaj termin?')) return;
-  sessions = sessions.filter(s => s.id !== id);
-  save(); renderSessions();
-  toast('Termin obrisan.');
-}
+  try {
+    await deleteDoc(doc(db, 'sessions', fid));
+    toast('Termin obrisan.');
+  } catch(e) { toast('Greška: ' + e.message); }
+};
 
-function closeSheets() {
+// ── Close sheets ───────────────────────────────────────────────────────────
+window.closeSheets = () => {
   document.getElementById('join-sheet').classList.remove('open');
   document.getElementById('score-sheet').classList.remove('open');
-}
+};
+document.querySelectorAll('.sheet-bg').forEach(bg => {
+  bg.addEventListener('click', e => { if (e.target === bg) closeSheets(); });
+});
 
-// ── Render sessions ───────────────────────────────────────────────────────
+// ── Render sessions ────────────────────────────────────────────────────────
 function renderSessions() {
   const list = document.getElementById('sessions-list');
   const filtered = activeFilter === 'sve' ? sessions : sessions.filter(s => s.location === activeFilter);
@@ -511,13 +495,15 @@ function renderSessions() {
   }
   const sorted = [...filtered].sort((a,b) => new Date(a.datetime) - new Date(b.datetime));
   list.innerHTML = sorted.map(s => {
+    const fid = s.firestoreId;
     const full = s.players.length >= 4;
     const pct = (s.players.length / 4) * 100;
     const hasDone = !!s.result;
     const badgeCls = hasDone ? 'badge-done' : full ? 'badge-full' : 'badge-open';
     const badgeTxt = hasDone ? 'Odigrano' : full ? 'Popunjeno' : 'Slobodno';
+    const AV = ['av-t','av-c','av-t','av-c'];
     const slots = Array.from({length:4},(_,i) => {
-      if (s.players[i]) return `<div class="avatar ${AV_COLORS[i]}" title="${s.players[i]}">${ini(s.players[i])}</div>`;
+      if (s.players[i]) return `<div class="avatar ${AV[i]}" title="${s.players[i]}">${ini(s.players[i])}</div>`;
       return `<div class="avatar av-e">+</div>`;
     }).join('');
 
@@ -545,8 +531,7 @@ function renderSessions() {
             <div class="team-lbl">Tim 2</div>
             ${s.teams.b.map(p=>`<div class="team-player"><div class="avatar av-c" style="width:26px;height:26px;font-size:10px">${ini(p)}</div>${p}</div>`).join('')}
           </div>
-        </div>
-        ${resHtml}
+        </div>${resHtml}
       </div>`;
     }
 
@@ -563,87 +548,74 @@ function renderSessions() {
       <div class="prog"><div class="prog-fill ${full?'full':''}" style="width:${pct}%"></div></div>
       ${teamsHtml}
       <div class="sc-actions">
-        ${!full ? `<button class="btn-action" onclick="openJoin(${s.id})"><i class="ti ti-user-plus"></i>Prijavi se</button>` : ''}
-        ${full && !s.teams ? `<button class="btn-action" onclick="assignTeams(${s.id})"><i class="ti ti-users"></i>Složi parove</button>` : ''}
-        ${s.teams ? `<button class="btn-action" onclick="swapTeam(${s.id})"><i class="ti ti-switch-horizontal"></i>Zamijeni</button>` : ''}
-        ${s.teams ? `<button class="btn-action" onclick="openScore(${s.id})"><i class="ti ti-trophy"></i>${s.result?'Uredi':'Rezultat'}</button>` : ''}
+        ${!full ? `<button class="btn-action" onclick="openJoin('${fid}')"><i class="ti ti-user-plus"></i>Prijavi se</button>` : ''}
+        ${full && !s.teams ? `<button class="btn-action" onclick="assignTeams('${fid}')"><i class="ti ti-users"></i>Složi parove</button>` : ''}
+        ${s.teams ? `<button class="btn-action" onclick="swapTeam('${fid}')"><i class="ti ti-switch-horizontal"></i>Zamijeni</button>` : ''}
+        ${s.teams ? `<button class="btn-action" onclick="openScore('${fid}')"><i class="ti ti-trophy"></i>${s.result?'Uredi':'Rezultat'}</button>` : ''}
         <span class="slots-txt">${s.players.length}/4</span>
-        <button class="btn-del" onclick="deleteSession(${s.id})" aria-label="Obriši"><i class="ti ti-trash" style="font-size:16px"></i></button>
+        <button class="btn-del" onclick="deleteSession('${fid}')" aria-label="Obriši"><i class="ti ti-trash" style="font-size:16px"></i></button>
       </div>
     </div>`;
   }).join('');
 }
 
-// ── Render stats ──────────────────────────────────────────────────────────
+// ── Stats ──────────────────────────────────────────────────────────────────
+window.setSort = (mode, el) => {
+  sortMode = mode;
+  document.querySelectorAll('#sort-chips .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderStats();
+};
+
 function computePlayerStats() {
   const map = {};
   sessions.forEach(s => {
     s.players.forEach(p => { if (!map[p]) map[p] = {name:p,mecevi:0,pobjede:0,porazi:0,setsW:0,setsL:0}; });
     if (!s.result || !s.teams) return;
-    s.result.sets.forEach(st => {
-      const sA = st.a, sB = st.b;
-    });
     const wA = s.result.sets.filter(st=>st.a>st.b).length;
     const wB = s.result.sets.filter(st=>st.b>st.a).length;
-    const totalA = s.result.sets.reduce((a,st)=>a+st.a,0);
-    const totalB = s.result.sets.reduce((a,st)=>a+st.b,0);
     [...s.teams.a,...s.teams.b].forEach(p => {
       if (!map[p]) map[p] = {name:p,mecevi:0,pobjede:0,porazi:0,setsW:0,setsL:0};
       map[p].mecevi++;
       const inA = s.teams.a.includes(p);
-      if (s.result.winner === 'a') { if (inA){map[p].pobjede++;map[p].setsW+=wA;map[p].setsL+=wB;} else{map[p].porazi++;map[p].setsW+=wB;map[p].setsL+=wA;} }
-      else if (s.result.winner === 'b') { if (!inA){map[p].pobjede++;map[p].setsW+=wB;map[p].setsL+=wA;} else{map[p].porazi++;map[p].setsW+=wA;map[p].setsL+=wB;} }
+      if (s.result.winner === 'a') { if(inA){map[p].pobjede++;map[p].setsW+=wA;map[p].setsL+=wB;}else{map[p].porazi++;map[p].setsW+=wB;map[p].setsL+=wA;} }
+      else if (s.result.winner === 'b') { if(!inA){map[p].pobjede++;map[p].setsW+=wB;map[p].setsL+=wA;}else{map[p].porazi++;map[p].setsW+=wA;map[p].setsL+=wB;} }
       else { if(inA){map[p].setsW+=wA;map[p].setsL+=wB;}else{map[p].setsW+=wB;map[p].setsL+=wA;} }
     });
   });
   return Object.values(map);
 }
 
-function setSort(mode, el) {
-  sortMode = mode;
-  document.querySelectorAll('#sort-chips .chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  renderStats();
-}
-
 function renderStats() {
   const stats = computePlayerStats();
   const totalMecevi = sessions.filter(s=>s.result).length;
   const totalSets = stats.reduce((a,p)=>a+p.setsW+p.setsL,0)/2;
-  const ukIgraci = stats.length;
-  const ukLok = new Set(sessions.map(s=>s.location)).size;
-
   document.getElementById('global-stats').innerHTML = `
     <div class="metric-card"><div class="metric-lbl">Mečevi</div><div class="metric-val">${totalMecevi}</div></div>
     <div class="metric-card"><div class="metric-lbl">Setova</div><div class="metric-val">${Math.round(totalSets)}</div></div>
-    <div class="metric-card"><div class="metric-lbl">Igrači</div><div class="metric-val">${ukIgraci}</div></div>
-    <div class="metric-card"><div class="metric-lbl">Lokacije</div><div class="metric-val">${ukLok}</div></div>`;
+    <div class="metric-card"><div class="metric-lbl">Igrači</div><div class="metric-val">${stats.length}</div></div>
+    <div class="metric-card"><div class="metric-lbl">Lokacije</div><div class="metric-val">${new Set(sessions.map(s=>s.location)).size}</div></div>`;
 
   const sorted = [...stats].sort((a,b) => {
-    if (sortMode === 'pobjede') return b.pobjede - a.pobjede || b.mecevi - a.mecevi;
-    if (sortMode === 'mecevi') return b.mecevi - a.mecevi || b.pobjede - a.pobjede;
-    if (sortMode === 'setovi') return b.setsW - a.setsW;
-    if (sortMode === 'postotak') { const pa=a.mecevi?a.pobjede/a.mecevi:0,pb=b.mecevi?b.pobjede/b.mecevi:0; return pb-pa||b.mecevi-a.mecevi; }
+    if (sortMode==='pobjede') return b.pobjede-a.pobjede||b.mecevi-a.mecevi;
+    if (sortMode==='mecevi') return b.mecevi-a.mecevi||b.pobjede-a.pobjede;
+    if (sortMode==='setovi') return b.setsW-a.setsW;
+    if (sortMode==='postotak') { const pa=a.mecevi?a.pobjede/a.mecevi:0,pb=b.mecevi?b.pobjede/b.mecevi:0; return pb-pa||b.mecevi-a.mecevi; }
     return 0;
   });
 
   const avCls = ['av-t','av-c','av-t','av-c','av-t','av-c'];
   document.getElementById('player-stats').innerHTML = sorted.map((p,i) => {
     const wp = p.mecevi ? Math.round(p.pobjede/p.mecevi*100) : 0;
-    const total = p.setsW + p.setsL;
+    const total = p.setsW+p.setsL;
     const wPct = total ? Math.round(p.setsW/total*100) : 0;
     const lPct = total ? Math.round(p.setsL/total*100) : 0;
-    let rCls = 'rn', rTxt = `#${i+1}`;
-    if (i===0){rCls='r1';rTxt='#1 🥇';}
-    else if (i===1){rCls='r2';rTxt='#2';}
-    else if (i===2){rCls='r3';rTxt='#3';}
+    let rCls='rn',rTxt=`#${i+1}`;
+    if(i===0){rCls='r1';rTxt='#1 🥇';}else if(i===1){rCls='r2';rTxt='#2';}else if(i===2){rCls='r3';rTxt='#3';}
     return `<div class="player-stat-card">
       <div class="psc-top">
         <div class="avatar ${avCls[i%6]}" style="width:40px;height:40px;font-size:13px">${ini(p.name)}</div>
-        <div>
-          <div style="font-size:15px;font-weight:600">${p.name}</div>
-          <div style="font-size:12px;color:var(--text2)">${p.mecevi} mečeva · ${wp}% pobjeda</div>
-        </div>
+        <div><div style="font-size:15px;font-weight:600">${p.name}</div><div style="font-size:12px;color:var(--text2)">${p.mecevi} mečeva · ${wp}% pobjeda</div></div>
         <span class="rank-badge ${rCls}">${rTxt}</span>
       </div>
       <div class="stats4">
@@ -662,37 +634,27 @@ function renderStats() {
   }).join('');
 }
 
-// ── PWA install ───────────────────────────────────────────────────────────
+// ── PWA Install ────────────────────────────────────────────────────────────
 window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredInstall = e;
+  e.preventDefault(); deferredInstall = e;
   document.getElementById('install-banner').style.display = 'flex';
 });
-function installApp() {
+window.installApp = () => {
   if (!deferredInstall) return;
   deferredInstall.prompt();
   deferredInstall.userChoice.then(() => {
     deferredInstall = null;
     document.getElementById('install-banner').style.display = 'none';
   });
-}
+};
 window.addEventListener('appinstalled', () => {
   document.getElementById('install-banner').style.display = 'none';
 });
 
-// ── Service Worker ────────────────────────────────────────────────────────
+// ── Service Worker ─────────────────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/Padel/sw.js').catch(() => {});
 }
-
-// ── Close sheets on bg tap ────────────────────────────────────────────────
-document.querySelectorAll('.sheet-bg').forEach(bg => {
-  bg.addEventListener('click', e => { if (e.target === bg) closeSheets(); });
-});
-
-// ── Init ──────────────────────────────────────────────────────────────────
-load();
-renderSessions();
 </script>
 </body>
 </html>
